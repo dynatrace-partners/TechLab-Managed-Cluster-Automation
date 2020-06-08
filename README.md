@@ -1,8 +1,9 @@
 **ATTENTION:** This is currently a work in progress. Please check back when the course is complete
+
 ![](./images/partner_program.png)
 
-# TechLab-Managed-Cluster-Automation
-Partner Program Tech Lab - Automate tenant, usergroup and user creation and auto deploy OneAgent to new tenant.
+# Overview
+Hello and welcome to this Dynatrace Partner TechLab. We are launching these as self-paced training for all our partners. During this session we will focus on automation and complete hands on exercies on how to automate tenant, usergroup and user creation and auto deploy OneAgent to the new tenant.
 
 The goals of this tutorial are;
 1. **Tenant Management** Automatically create tenants on a managed cluster. Useful for onboarding new customers, training events, creating additional environments etc.
@@ -28,3 +29,14 @@ First we will run these setps individually so you get a feel for how they operat
 As we are going to use AWS EC2. We have tested this tutorial on eu-west-1 (Ireland). To be on the safe side we suggest you pick this region!
 Ensure you have installed the AWS CLI and configured it.
 ![](./images/preparation_awsconfigure.png)
+
+**Dynatrace**
+
+You will need to have provisioned your dynatrace managed cluster. For installation instructions please follow the [documentation](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-managed/installation/set-up-a-cluster/)
+
+Once you have have your cluster provisioned we need a couple of things
+1. Your dynatrace managed URL. That should look something like https://xxxxxx.dynatrace-managed.com
+2. Cluster API token. Inside CMC go to Settings -> API tokens -> Cluster tokens and select Generate token. Grant it the scope of Service Provider API
+![](./images/preparation_clusterapi.png)
+Expand the token and copy the API key
+![](./images/preparation_clusterapitoken.png)
