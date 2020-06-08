@@ -6,11 +6,11 @@
 Hello and welcome to this Dynatrace Partner TechLab. We are launching these as self-paced training for all our partners. During this session we will focus on automation and complete hands on exercies on how to automate tenant, usergroup and user creation and auto deploy OneAgent to the new tenant.
 
 The goals of this tutorial are;
-1. **Tenant Management** Automatically create tenants on a managed cluster. Useful for onboarding new customers, training events, creating additional environments etc.
-2. **User Group Management** Automtically create User Groups with the correct access to your freshly created tenant. Useful for onboarding new users, training events and user management.
-3. **User Management** Automtically create Users and assign them to the correct user group. Useful for onboarding new users, training events and user management.
-4. **API token Management** Automatically create API tokens with the correct roles. Useful for automated Oneagent deployments, integrations, training events, key rotation etc.
-5. **Automated OneAgent Deploymentt** Start ec2 instances and automatically install and configure the OneAgent. Useful for fast deployments of the OneAgent and ensuring new resources are implemented. 
+1. **Tenant Management** - Automatically create tenants on a managed cluster. Useful for onboarding new customers, training events, creating additional environments etc.
+2. **User Group Management** - Automtically create User Groups with the correct access to your freshly created tenant. Useful for onboarding new users, training events and user management.
+3. **User Management** - Automtically create Users and assign them to the correct user group. Useful for onboarding new users, training events and user management.
+4. **API token Management** - Automatically create API tokens with the correct roles. Useful for automated Oneagent deployments, integrations, training events, key rotation etc.
+5. **Automated OneAgent Deployment** - Start ec2 instances and automatically install and configure the OneAgent. Useful for fast deployments of the OneAgent and ensuring new resources are implemented. 
 
 First we will run these setps individually so you get a feel for how they operate then we will provide a script that allows you to do it all at once.
 
