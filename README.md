@@ -37,6 +37,9 @@ You will need to have provisioned your dynatrace managed cluster. For installati
 Once you have have your cluster provisioned we need a couple of things
 1. Your dynatrace managed URL. That should look something like https://xxxxxx.dynatrace-managed.com
 2. Cluster API token. Inside CMC go to Settings -> API tokens -> Cluster tokens and select Generate token. Grant it the scope of Service Provider API
+
 ![](./images/preparation_clusterapi.png)
+
 Expand the token and copy the API key
+
 ![](./images/preparation_clusterapitoken.png)
