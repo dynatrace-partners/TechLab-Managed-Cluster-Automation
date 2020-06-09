@@ -29,7 +29,7 @@ First we will run these setps individually so you get a feel for how they operat
 
 As we are going to use AWS EC2. We have tested this tutorial on eu-west-1 (Ireland). To be on the safe side we suggest you pick this region!
 Ensure you have installed the AWS CLI and configured it.
-![](./images/preparation_awsconfigure.png)
+![](./images/preparation/awsconfigure.png)
 
 **Dynatrace**
 
@@ -39,11 +39,11 @@ Once you have have your cluster provisioned we need a couple of things
 1. Your dynatrace managed URL. That should look something like `https://xxxxxx.dynatrace-managed.com`
 2. Cluster API token. Inside CMC go to Settings -> API tokens -> Cluster tokens and select Generate token. Grant it the scope of Service Provider API
 
-![](./images/preparation_clusterapi.png)
+![](./images/preparation/clusterapi.png)
 
 Expand the token and copy the API key
 
-![](./images/preparation_clusterapitoken.png)
+![](./images/preparation/clusterapitoken.png)
 
 # 2. Manage your monitoring environments
 
@@ -56,3 +56,18 @@ You might also be running managed as a service for your customers. In that case 
 Monitorining environments can be created using the Cluster Management Console but this can be cumbersome if you have a large amount to manage.
 
 In this exercise we will create a new monitoring environment and assign the appropriate license limits to it via an API call.
+
+**Create a new monitoring environment?**
+
+To create a new monitoring environment ensure you have set-up your managed cluster, have generated a Cluster API Token and installed CURL and JQ in your prefered command line tool.
+
+1. Issue the following commands, ensuring to update them with your managed URL and Cluster API token. Do not include the 'https://'
+
+`export dtManaged=xxxxx.dynatrace-managed.com`
+`export dtAPI=xxxxxxxxxxxxxxxxx`
+
+Check the values are correctly set
+
+'echo $dtManaged' the output should look like
+
+![](./images/monitoringenvironments/dtManaged.png)
