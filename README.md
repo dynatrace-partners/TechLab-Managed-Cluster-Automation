@@ -142,17 +142,24 @@ In our case the script parses the JSON reponse body for the ID and API token of 
 
 **Executing the request**
 1. Open the Create Environment request.
-Verify that you have selected your TechLab-Managed-Cluster-Automation environment then hover over the variable dtManaged and verify both the initial and current values are set, it should look like 'xxxxxx.dynatrace-managed.com' without the `https://`
-![](./images/monitoringenvironments/createEnvironment.png)
-On the Headers tab hover over \{\{dtAPI\}\} to ensure it has been sent
-2. Click on `Send` to execute the request.
-3. Check that the request received a 201 Created response and the response body contains the id, name and token for your new environment
+2. Verify your environment variables are set and selected.
+    * Verify that you have selected your TechLab-Managed-Cluster-Automation environment then hover over the variable dtManaged and verify both the initial and current values are set, it should look like 'xxxxxx.dynatrace-managed.com' without the `https://`
+
+    ![](./images/monitoringenvironments/createEnvironment.png)
+
+    * On the Headers tab hover over \{\{dtAPI\}\} to ensure it has been sent
+3. Click on `Send` to execute the request.
+4. Check that the request received a 201 Created response and the response body contains the id, name and token for your new environment
+
 ![](./images/monitoringenvironments/creteEnvResp.png)
+
 If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
+
 If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
-4. Check your new environment now exists in CMC
-5. Access your new environment by clicking on it's name in CMC and then Go to environment
-6. Verify your new environment ID and Token have been set as environment variables in postman
+
+5. Check your new environment now exists in CMC
+6. Access your new environment by clicking on it's name in CMC and then Go to environment
+7. Verify your new environment ID and Token have been set as environment variables in postman
 
 Congratulations you have just created a new environment via an API call. Now lets create a usergroup to grant access to this environment.
 
