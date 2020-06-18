@@ -1,0 +1,27 @@
+#!/bin/bash
+mkdir /home/ubuntu/easyTravel
+wget -P /home/ubuntu/easyTravel http://dexya6d9gs5s.cloudfront.net/latest/dynatrace-easytravel-linux-x86_64.jar
+mkdir easytravel-2.0.0-x64
+chown ubuntu:ubuntu easytravel-2.0.0-x64
+chown ubuntu:ubuntu dynatrace-easytravel-linux-x86_64.jar
+apt-get update
+apt -y install default-jre
+su -c 'java -jar /home/ubuntu/easyTravel/dynatrace-easytravel-linux-x86_64.jar -y' - ubuntu
+apt-get -y install libgtk-3-0 libxss1 libasound2
+su -c 'mkdir -p /home/ubuntu/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config' - ubuntu
+echo 'config.apacheFrontendPublicUrl=http://ec2-54-229-209-148.eu-west-1.compute.amazonaws.com:8079/' > /home/ubuntu/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+export temp="config.angularFrontendPublicUrl=http://ec2-34-244-187-144.eu-west-1.compute.amazonaws.com:9080/"
+sed  -i "1 i\\$temp" /home/ubuntu/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+chown ubuntu:ubuntu /home/ubuntu/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+export temp="sed -i.bak 's/^\\\(config.angularFrontendPublicUrl=http:\\\/\\\/\\\)[^:]*\/\\\1'\$response'/' /home/ubuntu/.dynaTrace/easyTravel\\\ 2.0.0/easyTravel/config/easyTravelLocal.properties"
+sed  -i "2 i\\$temp" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
+export temp="sed -i.bak 's/^\\\(config.apacheFrontendPublicUrl=http:\\\/\\\/\\\)[^:]*\/\\\1'\$response'/' /home/ubuntu/.dynaTrace/easyTravel\\\ 2.0.0/easyTravel/config/easyTravelLocal.properties"
+sed  -i "2 i\\$temp" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
+sed -i "1s/.*/&\necho \$response/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
+sed -i "1s/.*/&\nresponse=\`\$publicDNS\`/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
+sed -i "1s/.*/&\necho \$publicDNS/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
+sed -i "1s/.*/&\npublicDNS=\"curl http:\/\/169.254.169.254\/latest\/meta-data\/public-hostname\"/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
+sed -i "1s/.*/&\necho \"determining public dns\"/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
+sed -i "1s/.*/&\n/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
+sleep 120
+su -c 'nohup /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh --startgroup UEM --startscenario "Standard with REST Service and Angular2 frontend" &' - ubuntu

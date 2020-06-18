@@ -1,0 +1,581 @@
+ubuntu@ip-172-31-34-138:~$ history
+    1  sudo su
+    2  sudo -su
+    3  sudo su
+    4  sudo si
+    5  sudo su
+    6  http://localhost:1697/statusAll
+    7  curl http://localhost:1697/statusAll
+    8  ps -ef | grep httpd
+    9  killall httpd
+   10  sudo killall httpd
+   11  ps -ef | grep httpd
+   12  curl http://localhost:1697/statusAll
+   13  cd easyTravel/
+   14  ls
+   15  rm -rf easytravel-2.0.0-x64/
+   16  sudo rm -rf easytravel-2.0.0-x64/
+   17  ls
+   18  sudo rm dynatrace-easytravel-linux-x86_64.jar 
+   19  ls
+   20  wget http://dexya6d9gs5s.cloudfront.net/latest/dynatrace-easytravel-linux-x86_64.jar
+   21  ls
+   22  sudo wget http://dexya6d9gs5s.cloudfront.net/latest/dynatrace-easytravel-linux-x86_64.jar
+   23  ls -l
+   24  sudo su
+   25  sudo apt-get install libgtk-3-0 libxss1 libasound2
+   26  reboot
+   27  sudo apt-get install libgtk-3-0 libxss1 libasound2
+   28  sudo su
+   29  ls
+   30  cd easyTravel/
+   31  ls
+   32  cd easytravel-2.0.0-x64/
+   33  ls
+   34  ls -l
+   35  less resources/easyTravel.properties 
+   36  cd 
+   37  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+   38  ls
+   39  cd ../log
+   40  less CmdLauncher.log 
+   41  cd 
+   42  cd easyTravel/easytravel-2.0.0-x64/resources/
+   43  less easyTravelConfig.properties 
+   44  ls
+   45  sudo su
+   46  cd 
+   47  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+   48  ls
+   49  ps -ef | grep java
+   50  ls
+   51  cd easyTravel/
+   52  java -jar dynatrace-easytravel-linux-x86_64.jar 
+   53  mkdir easytravel-2.0.0-x64
+   54  sudo mkdir easytravel-2.0.0-x64
+   55  ls -l
+   56  sudo chown ubuntu:ubuntu easytravel-2.0.0-x64/*
+   57  ls -l
+   58  sudo chown ubuntu:ubuntu easytravel-2.0.0-x64
+   59  ls -l
+   60  java -jar dynatrace-easytravel-linux-x86_64.jar 
+   61  sudo apt-get install libgtk-3-0 libxss1 libasound2
+   62  sudo dpkg --configure -a
+   63  cd easytravel-2.0.0-x64/chrome32/
+   64  /chrome --headless --disable-gpu --dump-dom https://www.chromestatus.com
+   65  ./chrome --headless --disable-gpu --dump-dom https://www.chromestatus.com
+   66  ls
+   67  ls -l
+   68  ./chrome --headless --disable-gpu --dump-dom https://www.chromestatus.com
+   69  sudo apt-get install libgtk-3-0 libxss1 libasound2
+   70  ./chrome --headless --disable-gpu --dump-dom https://www.chromestatus.com
+   71  clear
+   72  cd ..
+   73  vi resources/easyTravelConfig.properties 
+   74  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+   75  vi resources/easyTravelConfig.properties 
+   76  cd
+   77  ls
+   78  ls -a
+   79  ls .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+   80  ls -la .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+   81  cd
+   82  ls
+   83  ls -a
+   84  sudo su
+   85  pwd
+   86  cd easyTravel/easytravel-2.0.0-x64/
+   87  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+   88  sudo su
+   89  ./runEasyTravel.sh 
+   90  cd
+   91  ls -l .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+   92  top
+   93  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+   94  cd easyTravel/easytravel-2.0.0-x64/
+   95  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+   96  ls
+   97  cd easyTravel/easytravel-2.0.0-x64/
+   98  ls -l
+   99  sudo su
+  100  cd
+  101  cat .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties 
+  102  vi easyTravel/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh 
+  103  vi .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties 
+  104  cat .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties 
+  105  vi .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties 
+  106  vi easyTravel/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh 
+  107  vi .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties 
+  108  cd easyTravel/easytravel-2.0.0-x64/
+  109  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+  110  vi resources/easyTravelConfig.properties 
+  111  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+  112  cd easyTravel/easytravel-2.0.0-x64/
+  113  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+  114  vi resources/easyTravelConfig.properties 
+  115  ls
+  116  cd plugins-frontend/
+  117  ls
+  118  cd ..
+  119  find . -name "*JsErrorWhenSelectingTravelers*"
+  120  ls
+  121  ls -l plugins-shared/
+  122  ls -l plugins-backend/
+  123  vi resources/easyTravelConfig.properties 
+  124  find . -name "Secenarios*"
+  125  cd easyTravel/easytravel-2.0.0-x64/
+  126  ls
+  127  cd resources/
+  128  ls
+  129  cd
+  130  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/
+  131  ls
+  132  cd config/
+  133  ls
+  134  cd
+  135  find . -name "Scenarios*"
+  136  find . -name "Scenari*"
+  137  cd .dynaTrace/
+  138  find . -name "Scenari*"
+  139  cd
+  140  find . -name "userScenari*"
+  141  cd .dynaTrace/
+  142  find . -name "userScenari*"
+  143  find . -name "scenario.xml"
+  144  cd
+  145  find . -name "scenario.xml"
+  146  sudo su
+  147  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  148  ls -a
+  149  l -la
+  150  ls
+  151  vi scenarios.xml 
+  152  cd
+  153  cd easyTravel/easytravel-2.0.0-x64/resources/
+  154  ls
+  155  vi easyTravelConfig.properties 
+  156  ls
+  157  cd ..
+  158  ls
+  159  ls -l plugins-frontend/
+  160  ls -l plugins-shared/
+  161  ls -l plugins-backend/
+  162  cd
+  163  find . -name "*travellersoptionbox"
+  164  find . -name "*travellersoptionbox*"
+  165  cd easyTravel/easytravel-2.0.0-x64/
+  166  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+  167  cd easyTravel/easytravel-2.0.0-x64/
+  168  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+  169  vi resources/easyTravelConfig.properties 
+  170  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+  171  cd easyTravel/easytravel-2.0.0-x64/
+  172  ./runEasyTravelNoGUI.sh -startgroup UEM -startscenario "Standard with REST Service and Angular2 frontend"
+  173  vi resources/easyTravelConfig.properties 
+  174  ls
+  175  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/
+  176  ls
+  177  cd config/
+  178  ls
+  179  vi scenarios.xml 
+  180  cd
+  181  cd easyTravel/easytravel-2.0.0-x64/
+  182  ls
+  183  cd chrome32/
+  184  ls
+  185  ls -l
+  186  cd ..
+  187  ls
+  188  cd selenium/
+  189  ls
+  190  ls -l
+  191  cat build.properties 
+  192  cd
+  193  grep -rnw '' -e '--headless'
+  194  grep -rnw 'easyTravel/' -e '--headless'
+  195  grep -rnw '.dynaTrace/' -e '--headless'
+  196  grep -Ril "headless" /
+  197  sudo su
+  198  cd
+  199  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/
+  200  ls
+  201  cd config/
+  202  ls -la
+  203  cat ExtendedUsers.txt 
+  204  cd
+  205  sudo su
+  206  history
+ubuntu@ip-172-31-34-138:~$ sudo su
+root@ip-172-31-34-138:/home/ubuntu# history
+    1  mkdir easyTravel
+    2  cd easyTravel/
+    3  apt-get install default-jdk
+    4  wget https://s3.amazonaws.com/easytravel/dT71/dynatrace-easytravel-linux-x86_64-2.0.0.2892.jar
+    5  java -jar dynatrace-easytravel-linux-x86_64-2.0.0.2892.jar 
+    6  vi easytravel-2.0.0-x64/resources/easyTravelConfig.properties 
+    7  cd easytravel-2.0.0-x64/
+    8  ./runEasyTravelNoGUI.sh 
+    9  systemctl status apache2
+   10  vi resources/easyTravelConfig.properties 
+   11  ./runEasyTravelNoGUI.sh 
+   12  cd 
+   13  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/
+   14  ls
+   15  cd log/
+   16  ls
+   17  cd ..
+   18  cd config/
+   19  ls
+   20  systemctl status apache2
+   21  reboot
+   22  cd easyTravel/easytravel-2.0.0-x64/
+   23  ./runEasyTravelNoGUI.sh 
+   24  vi resources/easyTravelConfig.properties 
+   25  cd
+   26  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/
+   27  cd log/
+   28  ls
+   29  cd ..
+   30  ls
+   31  cd easyTravel\ 2.0.0/
+   32  ls
+   33  cd easyTravel/
+   34  ls
+   35  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+   36  vi resources/easyTravelConfig.properties 
+   37  apt-get install lib32z1
+   38  apt-get update
+   39  install gcc-multilib
+   40  aptitude install gcc-multilib
+   41  apt-get install gcc-multilib
+   42  apt-get install libxml2:i386
+   43  apt-get install libxml2
+   44  apt-get install libcurl3:i386
+   45  apt-get install libcurl3
+   46  dpkg --print-architecture
+   47  dpkg --print-foreign-architectures
+   48  sudo dpkg --add-architecture i386
+   49  dpkg --print-foreign-architectures
+   50  sudo apt -get update
+   51  apt -get update
+   52  apt-get update
+   53  apt-get install libxml2:i386
+   54  apt-get install libcurl3:i386
+   55  ./runEasyTravelNoGUI.sh 
+   56  wget  -O Dynatrace-OneAgent-Linux-1.149.213.sh "https://mvv888.dynatrace-managed.com/e/trainingattendee45-6-8-2018-SEWorkshop1/api/v1/deployment/installer/agent/unix/default/latest?Api-Token=b06GLE-8R22K_2_oy7a0M&arch=x86&flavor=default"
+   57  ./easyTravel/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh 
+   58  ./easyTravel/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh 
+   59  reboot
+   60  ./easyTravel/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh 
+   61  cd 
+   62  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+   63  ls
+   64  cd
+   65  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/weblauncher/
+   66  ls
+   67  ./weblauncher.sh 
+   68  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+   69  cd
+   70  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+   71  ls
+   72  cd
+   73  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+   74  ./runEasyTravelNoGUI.sh 
+   75  vi resources/easyTravelConfig.properties 
+   76  ./runEasyTravelNoGUI.sh 
+   77  cd easyTravel/easytravel-2.0.0-x64/
+   78  ./runEasyTravelNoGUI.sh 
+   79  cd ..
+   80  ls
+   81  cd /opt/dynatrace/oneagent/agent/
+   82  ls
+   83  ./uninstall.sh 
+   84  ls
+   85  cd ..
+   86  ls
+   87  cd ..
+   88  ls
+   89  rm -f -r dynatrace/
+   90  ls
+   91  cd cd /var/lib/dynatrace/
+   92  ls
+   93  ls -l
+   94  ls
+   95  cd /var/lib/dynatrace/
+   96  ls
+   97  cd ..
+   98  rm -f -r dynatrace/
+   99  ls
+  100  shutdown -h now
+  101  wget  -O Dynatrace-OneAgent-Linux-1.155.320.sh "https://mvv888.dynatrace-managed.com/e/trainingattendee1-23-10-2018-DavisTest/api/v1/deployment/installer/agent/unix/default/latest?Api-Token=QK0iBiQXTxOduGi0abAI6&arch=x86&flavor=default"
+  102  ./easyTravel/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh 
+  103  ls
+  104  cd easyTravel/
+  105  ls
+  106  cd easytravel-2.0.0-x64/
+  107  ls
+  108  cd ..
+  109  ls
+  110  cd ..
+  111  ls
+  112  cd ..
+  113  ls
+  114  cd
+  115  ls
+  116  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/
+  117  ls
+  118  cd config/
+  119  ls
+  120  ls -l /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  121  ls
+  122  cd ..
+  123  ls
+  124  cd config/
+  125  ls
+  126  ls -l
+  127  cd extra/
+  128  ls
+  129  cd ..
+  130  ls
+  131  cd /tmp/
+  132  ls
+  133  cd 
+  134  cd /opt/dynatrace/
+  135  ls
+  136  cd
+  137  ls
+  138  cd /home/
+  139  ls
+  140  cd ubuntu/
+  141  ls
+  142  cd
+  143  ls
+  144  cd .dynaTrace/
+  145  ls -l
+  146  cd easyTravel\ 2.0.0/
+  147  ls
+  148  cd easyTravel/
+  149  ls
+  150  ls -l
+  151  cd /opt/
+  152  ls
+  153  cd
+  154  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/
+  155  ls
+  156  cd /home/ubuntu/easyTravel/
+  157  ls
+  158  rm -f easytravel-2.0.0-x64/
+  159  rm -rf easytravel-2.0.0-x64/
+  160  ls
+  161  wget http://dexya6d9gs5s.cloudfront.net/latest/dynatrace-easytravel-linux-x86_64.jar
+  162  ls
+  163  rm -f dynatrace-easytravel-linux-x86_64-2.0.0.2892.jar 
+  164  java -jar dynatrace-easytravel-linux-x86_64.jar 
+  165  cd easytravel-2.0.0-x64/
+  166  ls
+  167  ./runEasyTravelNoGUI.sh 
+  168  ls
+  169  vi resources/easyTravel.properties 
+  170  cd resources/
+  171  ls
+  172  vi easyTravelConfig.properties 
+  173  cd ..
+  174  ./runEasyTravelNoGUI.sh 
+  175  cd resources/
+  176  ls
+  177  cd 
+  178  ccd .dynaTrace/easyTravel\ 2.0.0/easyTravel/
+  179  ls
+  180  cd
+  181  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  182  ls
+  183  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  184  vi resources/easyTravelConfig.properties 
+  185  curl http://169.254.169.254/latest/meta-data/public-hostname
+  186  ls
+  187  vi runEasyTravelNoGUI.sh 
+  188  ./runEasyTravelNoGUI.sh 
+  189  cd
+  190  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  191  vi easyTravelLocal.properties
+  192  vi /home/ubuntu/easyTravel/easytravel-2.0.0-x64/resources/easyTravelConfig.properties 
+  193  vi /home/ubuntu/easyTravel/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh 
+  194  pwd
+  195  ls
+  196  sed -i.bak 's/^\(config.apacheFrontendPublicUrl=\).*/\1response/' ~/.dynaTrace/easyTravel 2.0.0/easyTravel/config/easyTravelLocal.properties
+  197  sed -i.bak 's/^\(config.apacheFrontendPublicUrl=\).*/\1response/' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  198  vi /home/ubuntu/easyTravel/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh 
+  199  ./home/ubuntu/easyTravel/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh 
+  200  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  201  ./runEasyTravelNoGUI.sh 
+  202  cd 
+  203  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/
+  204  ls
+  205  cd config/
+  206  cat easyTravelLocal.properties
+  207  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  208  vi runEasyTravelNoGUI.sh 
+  209  ./runEasyTravelNoGUI.sh 
+  210  cd ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  211  cat easyTravelLocal.properties
+  212  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  213  ./runEasyTravelNoGUI.sh 
+  214  vi resources/easyTravelConfig.properties 
+  215  cd ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  216  vi easyTravelLocal.properties
+  217  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  218  vi runEasyTravelNoGUI.sh 
+  219  cd ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  220  vi easyTravelLocal.properties
+  221  cat easyTravelLocal.properties
+  222  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  223  ./runEasyTravelNoGUI.sh 
+  224  cd ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  225  cat easyTravelLocal.properties
+  226  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  227  vi runEasyTravelNoGUI.sh 
+  228  sed -i.bak 's/^\(config.apacheFrontendPublicUrl=http://\)[^:]*/\1'sdadsadresponse/' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  229  cat ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  230  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  231  sed -i.bak 's/^\(config.apacheFrontendPublicUrl=http://\)[^:]*/\1'sdadsadresponse/' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties[B
+  232  sed -i.bak 's/^\(config.apacheFrontendPublicUrl=http://\)[^:]*/\1'sdadsadresponse/' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  233  cat ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  234  sed -i.bak 's/^\(config.apacheFrontendPublicUrl=http:\/\/\)[^:]*/\1'sdadsadresponse/' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  235  sed -i.bak 's,^,(config.apacheFrontendPublicUrl=http://,)[^:]*,\1'sdadsadresponse/' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  236  sed -i.bak 's,^,(config.apacheFrontendPublicUrl=http://,)[^:]*,\1'sdadsadresponse,' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  237  sed -i.bak 's,^\(config.apacheFrontendPublicUrl=http://\)[^:]*,\1'sdadsadresponse,' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  238  sed -i.bak 's,^,(config.apacheFrontendPublicUrl=http://,)[^:]*,\1'sdadsadresponse,' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  239  sed -i.bak 's,^\(config.apacheFrontendPublicUrl=http://\)[^:]*,'sdadsadresponse,' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  240  sed -i.bak 's,^,(config.apacheFrontendPublicUrl=http://,)[^:]*,\1'sdadsadresponse,' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  241  sed -i.bak 's,\(config.apacheFrontendPublicUrl=http://\)[^:]*,'sdadsadresponse,' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  242  sed -i.bak 's,^,(config.apacheFrontendPublicUrl=http://,)[^:]*,\1'sdadsadresponse,' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  243  sed -i.bak 's,\(config.apacheFrontendPublicUrl=http://\)[^:]*,'sdadsadresponse,' ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  244  vi runEasyTravelNoGUI.sh 
+  245  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  246  ./runEasyTravelNoGUI.sh 
+  247  vi runEasyTravelNoGUI.sh 
+  248  ./runEasyTravelNoGUI.sh 
+  249  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  250  vi runEasyTravelNoGUI.sh 
+  251  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  252  ./runEasyTravelNoGUI.sh 
+  253  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  254  vi runEasyTravelNoGUI.sh 
+  255  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  256  vi runEasyTravelNoGUI.sh 
+  257  ./runEasyTravelNoGUI.sh 
+  258  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  259  ./runEasyTravelNoGUI.sh 
+  260  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  261  ./runEasyTravelNoGUI.sh 
+  262  vi resources/easyTravelConfig.properties 
+  263  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  264  ./runEasyTravelNoGUI.sh 
+  265  /8079
+  266  vi ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties
+  267  clear
+  268  ./runEasyTravelNoGUI.sh 
+  269  vi runEasyTravelNoGUI.sh 
+  270  vi resources/easyTravelConfig.properties 
+  271  cd ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  272  ls
+  273  vi scenarios.xml 
+  274  vi /home/ubuntu/easyTravel/easytravel-2.0.0-x64/resources/easyTravelConfig.properties 
+  275  vi scenarios.xml 
+  276  vi /home/ubuntu/easyTravel/easytravel-2.0.0-x64/resources/easyTravelConfig.properties 
+  277  vi scenarios.xml 
+  278  vi /home/ubuntu/easyTravel/easytravel-2.0.0-x64/resources/easyTravelConfig.properties 
+  279  ./runEasyTravelNoGUI.sh 
+  280  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  281  ./runEasyTravelNoGUI.sh 
+  282  curl http://localhost:1697/statusAll
+  283  cd easyTravel/easytravel-2.0.0-x64/
+  284  vi runEasyTravelNoGUI.sh 
+  285  curl http://localhost:1697/statusAll
+  286  cd /opt/dynatrace/oneagent/
+  287  ls
+  288  cd agent/
+  289  ls
+  290  ./uninstall.sh 
+  291  cd ..
+  292  ls
+  293  cd agent/
+  294  ls
+  295  cd bin/
+  296  ls
+  297  cd ..
+  298  cd /opt/
+  299  ls
+  300  cd dynatrace/
+  301  rm -rf oneagent/
+  302  ls
+  303  shutdown -h now
+  304  cd ~/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  305  vi easyTravelLocal.properties
+  306  vi /home/ubuntu/easyTravel/easytravel-2.0.0-x64/resources/easyTravelConfig.properties 
+  307  cd /home/ubuntu/easyTravel/easytravel-2.0.0-x64/
+  308  ./runEasyTravelNoGUI.sh 
+  309  ls
+  310  chown ubuntu:ubuntu dynatrace-easytravel-linux-x86_64.jar 
+  311  ls -l
+  312  chmod +x dynatrace-easytravel-linux-x86_64.jar 
+  313  chown ubuntu:ubuntu dynatrace-easytravel-linux-x86_64.jar 
+  314  ls -l
+  315  sudo apt-get install libgtk-3-0 libxss1 libasound2
+  316  exit
+  317  reboot
+  318  cd
+  319  ls -a
+  320  cd .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  321  ls
+  322  s-l
+  323  ls -l
+  324  cat ExtendedUsers.txt 
+  325  exit
+  326  cd /root/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  327  ls
+  328  exit
+  329  cd
+  330  cp .dynaTrace/easyTravel\ 2.0.0/easyTravel/config/easyTravelLocal.properties /home/ubuntu/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  331  cd /home/ubuntu/.dynaTrace/easyTravel\ 2.0.0/easyTravel/config/
+  332  chown ubuntu:ubuntu easyTravelLocal.properties 
+  333  ls -l
+  334  exit
+  335  cd
+  336  find . -name "scenario.xml"
+  337  history
+  338  exit
+  339  grep -RiL "headless"
+  340  grep -rnw "headless"
+  341  grep -rnw "--headless"
+  342  grep -rnw '--headless'
+  343  grep -rnw "console."
+  344  grep -rnw "dtrum"
+  345  exit
+  346  cd /opt/dynatrace/oneagent/agent/
+  347  ls
+  348  ./uninstall.sh 
+  349  cd /var/lib/dynatrace/oneagent/agent/
+  350  ls -la
+  351  cd config/
+  352  ls
+  353  cd ..
+  354  ls
+  355  rm -rf config/
+  356  ls
+  357  openssl version
+  358  apt update openssl
+  359  apt-get install openssl
+  360  apt install openssl
+  361  apt update
+  362  apt-get install openssl
+  363  apt list --upgradable
+  364  apt update
+  365  apt install
+  366  sudo apt install
+  367  sudo apt autoremove
+  368  sudo apt update && sudo apt install openssl
+  369  apt install
+  370  sudo apt-get upgrade
+  371  openssl version
+  372  history
