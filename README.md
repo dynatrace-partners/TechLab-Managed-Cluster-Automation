@@ -76,7 +76,7 @@ Repeat the same process to import TechLab-Managed-Cluster-Automation.postman_col
 
     * Set all the 5 environment variables to your values. Ensure to set both the initial and current values. For dtManaged it should look like 'xxxxxx.dynatrace-managed.com' do not include the 'https://'
 
-![](./images/preparation/environmentVars.png)
+    ![](./images/preparation/environmentVars.png)
 
     * Click on update to save your changes
 
@@ -125,6 +125,7 @@ Authorization | Api-Token \{\{dtAPI\}\} | This provides our cluster API token to
 Content-Type | application/json | The response contains JSON payload
 
 **Body**
+
 The JSON body of the request provides the required information. The body must not provide an ID as it will be automatically assigned by the Dynatrace server.
 Key | Value | Description
 ------------ | ------------- | -------------
@@ -133,10 +134,12 @@ state | ENABLED | This sets our new environment in the enabled state meaning it 
 tags | customerA, production | Tags are not visable in CMC but they are via the cluster API. In large clusters with lots of environments proper tag assignments will make management much easier. In our case we will tag our environment as customerA and production, in the future this would allow me to filer for this exact environment if i specified both tags or I could filter for all customerA's environments or all porduction environments.
 
 **Pre-request script**
+
 This is part of postman and not a requirement to create an environment via an API call. You can use pre-request scripts in Postman to execute JavaScript before a request runs. You can find more details [here](https://learning.postman.com/docs/postman/scripts/pre-request-scripts/)
 In our case the script checks to see if the environment variable envNumber exists or not. If it doesn't exist \(and it won't the first time you do this exercise\) it creates it and sets the value to 1. If the variable does exist \(i.e. you have run the request before\) then it will increment the value by one. As detailed above this variable is used in our environment name.
 
 **Tests**
+
 This is part of postman and not a requirement to create an environment via an API call. You can use Tests in Postman to execute JavaScript after a request runs. You can find more details [here](https://learning.postman.com/docs/postman/scripts/test-scripts/)
 In our case the script parses the JSON reponse body for the ID and API token of our new environment and sets them as environment variables envID and envTokenManagementToken so we can use them 
 
@@ -153,9 +156,9 @@ In our case the script parses the JSON reponse body for the ID and API token of 
 
 ![](./images/monitoringenvironments/creteEnvResp.png)
 
-If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
+    If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
 
-If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
+    If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
 
 5. Check your new environment now exists in CMC
 6. Access your new environment by clicking on it's name in CMC and then Go to environment
