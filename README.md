@@ -6,8 +6,8 @@
 Hello and welcome to this Dynatrace Partner TechLab. We are launching these as self-paced training for all our partners. During this session we will focus on automation and complete hands on exercies on how to automate creating a monitoring environment, usergroup and user and auto deploy OneAgent to the new environment.
 
 The goals of this tutorial are;
-1. **Tenant Management** - Automatically create tenants on a managed cluster. Useful for onboarding new customers, training events, creating additional environments etc.
-2. **User Group Management** - Automtically create User Groups with the correct access to your freshly created tenant. Useful for onboarding new users, training events and user management.
+1. **Environment Management** - Automatically create environments on a managed cluster. Useful for onboarding new customers, training events, creating additional environments etc.
+2. **User Group Management** - Automtically create User Groups with the correct access to your freshly created environment. Useful for onboarding new users, training events and user management.
 3. **User Management** - Automtically create Users and assign them to the correct user group. Useful for onboarding new users, training events and user management.
 4. **API token Management** - Automatically create API tokens with the correct roles. Useful for automated Oneagent deployments, integrations, training events, key rotation etc.
 5. **Automated OneAgent Deployment** - Start ec2 instances and automatically install and configure the OneAgent. Useful for fast deployments of the OneAgent and ensuring new resources are implemented. 
@@ -18,12 +18,14 @@ First we will run these setps individually so you get a feel for how they operat
 1. You need an AWS account. If you don't have one [get one here](https://aws.amazon.com/)
 1. AWS Access key and secret access key for an IAM user with rigths ec2:RunInstances &  ec2:DescribeImages
 1. You need a Dynatrace Managed Cluster license. If you don't have one, reach out to your Dynatrace Partner Program Manager (PPM) to be granted a trial license.
+
 Region | Name | Email
 ------------ | ------------- | -------------
 APAC | Dhruv Rajvanshi | [Dhruv.Rajvanshi@dynatrace.com](mailto:Dhruv.Rajvanshi@dynatrace.com)
 EMEA | Patricia Jesus Silva | [patricia.jesus.silva@dynatrace.com](mailto:patricia.jesus.silva@dynatrace.com)
 LATAM | Luiz Rodrigues | [Luiz.Rodrigues@dynatrace.com](mailto:Luiz.Rodrigues@dynatrace.co)
 NORAM | Jamie Mallett | [Jamie.Mallett@dynatrace.com](mailto:Jamie.Mallett@dynatrace.com)
+
 1. You need a Managed Cluster. A single trial node is sufficient. Thic could be run on a VM or in your EC2 account [view specs](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-managed/installation/dynatrace-managed-hardware-and-system-requirements/)
 1. Optional: ActiveGates - An ActiveGate is not required to complete these exercises but depending on your install and security requirements you may also require a CLuster and/or Environment ActiveGate. For more info see [When do I need to install an ActiveGate?](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/basic-concepts/when-do-i-need-to-install-an-activegate/)
 1. [Postman](https://www.postman.com/downloads/) installed
@@ -68,7 +70,7 @@ Set all the 5 environment variables to your values. Ensure to set both the initi
 ![](./images/preparation/environmentVars.png)
 Click on update to save your changes
 
-**ATTENTION:**You must execute these requests in the order they are listed in here as the requests gather response data and create new environment variables that are used in later requests.
+**ATTENTION:** You must execute these requests in the order they are listed in here as the requests gather response data and create new environment variables that are used in later requests.
 
 # 2. Creating a new monitoring environment
 
@@ -111,7 +113,7 @@ Content-Type | application/json | The response contains JSON payload
 The JSON body of the request provides the required information. The body must not provide an ID as it will be automatically assigned by the Dynatrace server.
 Key | Value | Description
 ------------ | ------------- | -------------
-name | TechLab-Managed-Cluster-Automation-\{\{envNumber\}\} | This will be the name assigned to your tenant and it should be unique. This name will be displayed to the users of the environment so in real customer projects ensure to choose and appropriate name. In our case i have set it to the same name as the techLab. The variable \{\{envNumber\}\} will be automatically created if it doesn't exist and set to 1. Each time this request is run the variable will increase by one to ensure teh name is unique.
+name | TechLab-Managed-Cluster-Automation-\{\{envNumber\}\} | This will be the name assigned to your environment and it should be unique. This name will be displayed to the users of the environment so in real customer projects ensure to choose and appropriate name. In our case i have set it to the same name as the techLab. The variable \{\{envNumber\}\} will be automatically created if it doesn't exist and set to 1. Each time this request is run the variable will increase by one to ensure teh name is unique.
 state | ENABLED | This sets our new environment in the enabled state meaning it will be accessible and immediately ready for use. 
 tags | customerA, production | Tags are not visable in CMC but they are via the cluster API. In large clusters with lots of environments proper tag assignments will make management much easier. In our case we will tag our environment as customerA and production, in the future this would allow me to filer for this exact environment if i specified both tags or I could filter for all customerA's environments or all porduction environments.
 
@@ -148,5 +150,3 @@ Check the values are correctly set
 'echo $dtAPI' to check your API key has been set.
 
 **ATTENTION:** There is now an Early Adopter for the Environments V2 API. In the future we will migrate this guide to it.
-
-dtEnvironment=($(curl --insecure -X POST --header "Content-Type:application/json" --header "Accept:application/json" --header "Authorization:Api-Token $dtAPI" -d "{\"tenantConfigDto\": {\"tenantUUID\": \"$tenID\", \"alias\": \"$tenID\", \"internalAlias\": \"$tenID\", \"displayName\":  \"$tenID\", \"domainNames\": [ ], \"isActive\": true }, \"licenseDto\": {\"licenseType\": \"PAYING\", \"expirationTime\": 1760698291000, \"hostUnitsQuota\": 2147483647, \"sessionStorageQuota\": 2147483647, \"visitsQuota\": \"-1\", \"infrastructureSupportedTechnologies\":  { \"pluginAgent\": true, \"networkAgent\": true, \"logAgent\": true, \"infrastructureOnlySupport\": true, \"maxInfrastructureOnlyAgents\": 9223372036854775807 }, \"isCreditExhausted\": false, \"isRumEnabled\": true } }" https://$dtManaged/api/v1.0/control/tenantManagement/createTenant))
