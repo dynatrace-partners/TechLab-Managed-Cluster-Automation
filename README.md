@@ -67,12 +67,14 @@ Repeat the same process to import TechLab-Managed-Cluster-Automation.postman_col
 Click on the [](./images/preparation/manageEnvironments.png) to manage your environments
 Click on the environment name TechLab-Managed-Cluster-Automation
 Set all the 5 environment variables to your values. Ensure to set both the initial and current values. For dtManaged it should look like 'xxxxxx.dynatrace-managed.com' do not include the 'https://'
+
 ![](./images/preparation/environmentVars.png)
+
 Click on update to save your changes
 
-**ATTENTION:** You must execute these requests in the order they are listed in here as the requests gather response data and create new environment variables that are used in later requests.
-
 # 2. Creating a new monitoring environment
+
+**ATTENTION:** You must execute these requests in the order they are listed in here as the requests gather response data and create new environment variables that are used in later requests.
 
 To create a new monitoring environment ensure you have set-up your managed cluster, have generated a Cluster API Token and configured Postman.
 
@@ -83,10 +85,12 @@ To create a new monitoring environment ensure you have set-up your managed clust
 Your Dynatrace monitoring environment is where all your Dynatrace performance analysis takes place. Dynatrace OneAgent sends all captured monitoring data to your monitoring environment for analysis. A monitoring environment is analogous to an analysis server that provides all Dynatrace application-performance analysis functionality, including all dashboards, charts, reports and other tools.
 
 **When would you create a new monitoring environment?**
+
 It's common to set up multiple monitoring environments so that related entities can be grouped for discrete analysis. For example, you might set up one monitoring environment to monitor and analyze the performance of your production clusters. You might set up a second environment that's dedicated to the performance of your developers' machines and a third environment for your staging servers.
 You might also be running managed as a service for your customers. In that case you would setup separate environments for each customer to ensure their data is segrated.
 
 **How do you create a new monitoring environment?**
+
 Monitorining environments can be created using the Cluster Management Console but this can be cumbersome if you have a large amount to manage.
 
 In this exercise we will create a new monitoring environment and assign the appropriate license limits to it via an API call.
@@ -94,15 +98,18 @@ In this exercise we will create a new monitoring environment and assign the appr
 ## Creating a new monitoring environment configuration
 
 **Request configuration**
+
 Lets have a look at the configuration of this request so we can understand what will happen when we execute it.
 
-This is a Post request that leverages the cluster v2 API endpoint environments. By making a request to this API enpoint we will create a single new environment on our managed cluster. The environment will be named 'TechLab-Managed-Cluster-Automation-x' where the x is  unique number that starts at 1 and will cound upward eachtime your execute the request to make sure the value us unique. Each request will create a single environment, seprate request are required if you wish to create multiple environments.
+This is a Post request that leverages the cluster v2 API endpoint environments. By making a request to this API enpoint we will create a single new environment on our managed cluster. The environment will be named `TechLab-Managed-Cluster-Automation-x` where the x is  unique number that starts at 1 and will cound upward eachtime your execute the request to make sure the value us unique. Each request will create a single environment, seprate request are required if you wish to create multiple environments.
 
 **Paramaters**
-By supplying the paramater createToken=true a token with the permission 'Token management' is created when creating a new environment. This token is then returned in the response body. It can be used within the newly created environment to create other tokens for configuring this environment.
+
+By supplying the paramater createToken=true a token with the permission `Token management` is created when creating a new environment. This token is then returned in the response body. It can be used within the newly created environment to create other tokens for configuring this environment.
 We are creating this token so we can use it in our next request to create an API token on our new environment with agent install rights.
 
 **Headers**
+
 We will supply 2 headers in this request;
 Key | Value | Description
 ------------ | ------------- | -------------
@@ -127,26 +134,18 @@ In our case the script parses the JSON reponse body for the ID and API token of 
 
 **Executing the request**
 1. Open the Create Environment request.
-Verify that you have selected your TechLab-Managed-Cluster-Automation environment then hover over the variable dtManaged and verify both the initial and current values are set, it should look like 'xxxxxx.dynatrace-managed.com' without the 'https://'
+Verify that you have selected your TechLab-Managed-Cluster-Automation environment then hover over the variable dtManaged and verify both the initial and current values are set, it should look like 'xxxxxx.dynatrace-managed.com' without the `https://`
 ![](./images/monitoringenvironments/createEnvironment.png)
 On the Headers tab hover over \{\{dtAPI\}\} to ensure it has been sent
-2. Click on 'Send' to execute the request.
+2. Click on `Send` to execute the request.
 3. Check that the request received a 201 Created response and the response body contains the id, name and token for your new environment
 ![](./images/monitoringenvironments/creteEnvResp.png)
-If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of 'xxxxxx.dynatrace-managed.com' without the 'https://'. Ensure both the initial and current values are set and the same.
+If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
 If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
 4. Check your new environment now exists in CMC
 5. Access your new environment by clicking on it's name in CMC and then Go to environment
 6. Verify your new environment ID and Token have been set as environment variables in postman
 
 Congratulations you have just created a new environment via an API call. Now lets create a usergroup to grant access to this environment.
-
-Check the values are correctly set
-
-'echo $dtManaged' the output should look like
-
-![](./images/monitoringenvironments/dtManaged.png)
-
-'echo $dtAPI' to check your API key has been set.
 
 **ATTENTION:** There is now an Early Adopter for the Environments V2 API. In the future we will migrate this guide to it.
