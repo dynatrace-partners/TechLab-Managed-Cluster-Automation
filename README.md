@@ -64,9 +64,12 @@ Inside Postman click on import, select file and upload TechLab-Managed-Cluster-A
 2. Upload the [postman collection](./postman/TechLab-Managed-Cluster-Automation.postman_collection.json) we have provided.
 Repeat the same process to import TechLab-Managed-Cluster-Automation.postman_collection.json
 3. Configure your postman environment variables
-Click on the [](./images/preparation/manageEnvironments.png) to manage your environments
-Click on the environment name TechLab-Managed-Cluster-Automation
-Set all the 5 environment variables to your values. Ensure to set both the initial and current values. For dtManaged it should look like 'xxxxxx.dynatrace-managed.com' do not include the 'https://'
+
+    * Click on the ![](./images/preparation/manageEnvironments.png) to manage your environments
+
+    * Click on the environment name TechLab-Managed-Cluster-Automation
+
+    * Set all the 5 environment variables to your values. Ensure to set both the initial and current values. For dtManaged it should look like 'xxxxxx.dynatrace-managed.com' do not include the 'https://'
 
 ![](./images/preparation/environmentVars.png)
 
