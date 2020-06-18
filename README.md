@@ -40,12 +40,17 @@ Ensure you have created an IAM user  with rigths ec2:RunInstances &  ec2:Describ
 Login to your AWS account and navigate to IAM
 ![](./images/preparation/awsconfigure.png)
 
+Once you have your IAM user and role we need a couple of things
+1. Your AWS Access Key ID. It should look something like `AKIAIOSFODNN7EXAMPLE`
+2. Your AWS Secret key. It should look something like `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY`
+3. Your AWS region. It should look something like `eu-west-1`
+
 **Dynatrace**
 
 You will need to have provisioned your dynatrace managed cluster. For installation instructions please follow the [documentation](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-managed/installation/set-up-a-cluster/)
 
 Once you have have your cluster provisioned we need a couple of things
-1. Your dynatrace managed URL. That should look something like `https://xxxxxx.dynatrace-managed.com`
+1. Your dynatrace managed URL. It should look something like `https://xxxxxx.dynatrace-managed.com`
 2. Cluster API token. Inside CMC go to Settings -> API tokens -> Cluster tokens and select Generate token. Grant it the scope of Service Provider API
 
 ![](./images/preparation/clusterapi.png)
@@ -73,7 +78,7 @@ Repeat the same process to import TechLab-Managed-Cluster-Automation.postman_col
 
 ![](./images/preparation/environmentVars.png)
 
-Click on update to save your changes
+    * Click on update to save your changes
 
 # 2. Creating a new monitoring environment
 
