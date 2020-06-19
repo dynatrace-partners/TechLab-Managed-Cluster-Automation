@@ -362,6 +362,85 @@ In our case the script parses the JSON reponse body for the new API token and se
 
     If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
 
-5. Check your new token exists in your environment under Settings > Integration > Dynatrace API > Other Dynatrace API tokens
+5. Check that the paasToken environment variable has been set in postman
+6. Check your new token exists in your environment under Settings > Integration > Dynatrace API > Other Dynatrace API tokens
+
+Congratulations you have just created a new API token with installer download permission via an API call. Now lets launch some EC2 instances and automatically deploy the OneAgent.
+
+# 6. Get AWS AMI ID
+
+As this is not a dynatrace API call and is purely to get an AMI ID we will not cover this in as much detail. For more information on it please see the [aws documentation](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImages.html). This request polls the AWS API to get the latest Ubuntu AMI in your region, it is filtered to the Ubuntu Cloud Account. This way when you launch an ec2 instance in the next step it will use this AMI to ensure you are on an up-to-date version. WHen you send the request the AMI ID will be stored as environment variable ImageId.
+
+**Executing the request**
+1. Open the Get AWS AMI ID request.
+2. Click on `Send` to execute the request.
+3. Check that the request received a 200 OK response.
+
+![](./images/monitoringenvironments/getAMI.png)
+
+    If you get a 401 error check the value of your accessKeyID, secretAccessKey and region environment variables. Ensure both the initial and current values are set and the same. If they are verfiy you have added the correct roles in IAM.
+
+5. Check that the ImageId environment variable has been set in postman
+
+Now that we have the latest Ubunntu image AMI we can launch our ec2 instance.
+
+# 7. Launching easyTravel ec2 Instances and auto deploying the OneAgent
+
+To launch the easytravel ec2 instances ensure you have created your environment, intsaller token and got the AWS AMI for the latest Ubuntu release. 
+As this is not a dynatrace API call and is used to start some ec2 we will not cover this in as much detail but we will cove how it auto deploys the OneAgent. For more information on it please see the [aws documentation](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html)
+
+## Launching easyTravel ec2 Instances and auto deploying the OneAgent 
+
+**How do you launc an easyTravel ec2 Instances and auto deploying the OneAgent?**
+
+We will leverage the aws RunInstances API call to start 2 instances of the latest Ubuntu AMI that we gathered in the previous call. This will be a blank Ubuntu image so we will leverage [AWS UserData](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html) to install and configure both easyTravel and the OneAgent. The UserData is sent as base64-encoded text but if you want to see the commands that are excuted I have provided a sample script [here](./aws/userData.txt). This sample is not exactly the same as the Postman execution as we dynamically set some values in the postman execution we will pass the correct dynatrace envirornment and API token details and we will set a host group. We will execute this request twice, the first will create a instance with th host group production and the second will create another instance with th host group test.
+
+## Launching easyTravel ec2 Instances and auto deploying the OneAgent configuration
+
+**Request configuration**
+
+**ATTENTION:** There are some values that are unique to your ec2 account that you will have to set for this request to work.
+
+Lets have a look at the configuration of this request so we can understand what will happen when we execute it.
+
+This is a Post request that leverages the environment v1 API endpoint tokens. This is different than the previous endpoints as this is now and environment endpoint where we have previously used cluster endpoints. Environment endpoints apply specifically to the specified environment. You will notice in the url we are now specifing an environment in the parameter \{\{envID\}\}, this was extracted from the response when the create environmet request was executed. 
+
+By making a request to this API enpoint we will create a new API token on our new environment with the rights to download the OneAgent Installer. For security we will set the token to expire in 4 hours. This means you need to create youe ec2 instance within this time.
+
+**Headers**
+
+We will supply 2 headers in this request;
+Key | Value | Description
+------------ | ------------- | -------------
+Authorization | Api-Token \{\{envTokenManagementToken\}\} | This provides our environment API token to authenticate the request. The token is stored in the environment variable \{\{envTokenManagementToken\}\} which was created when we ran our Create Environment request.
+Content-Type | application/json | The response contains JSON payload
+
+**Body**
+
+The JSON body of the request provides the required information. The body must not provide an ID as it will be automatically assigned by the Dynatrace server.
+Key | Value | Description
+------------ | ------------- | -------------
+name | TechLab-Managed-Cluster-Automation | This will be the name of our token. Dynatrace doesn't enforce unique token names. You can create multiple tokens with the same name. Be sure to provide a meaningful name for each token you generate. Proper token naming helps you to efficiently manage your tokens and perhaps delete them when they're no longer needed.
+scopes | InstallerDownload | This is the permissions the token will hold. In our case we only require the installer download. FOr a full list of permissions see [token permission](https://www.dynatrace.com/support/help/dynatrace-api/basics/dynatrace-api-authentication#token-permissions)
+expiresIn | 4 HOURS | This is an optional parameter that will cause the token to expire after a given time. It is strongly recommende to rotate your tokens frequently and this parameter can help you with that but be careful when using integrations. If not set then the token never expires.
+
+**Tests**
+
+This is part of postman and not a requirement to create an environment via an API call. You can use Tests in Postman to execute JavaScript after a request runs. You can find more details [here](https://learning.postman.com/docs/postman/scripts/test-scripts/)
+In our case the script parses the JSON reponse body for the new API token and sets it as environment variable paasToken so we can use it in the Launch AWS easyTravel Instances request to auto deploy the OneAgent.
+
+**Executing the request**
+1. Open the Create Installer Token request.
+2. Click on `Send` to execute the request.
+3. Check that the request received a 200 OK response.
+
+![](./images/monitoringenvironments/creteEnvResp.png)
+
+    If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
+
+    If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
+
+5. Check that the paasToken environment variable has been set in postman
+6. Check your new token exists in your environment under Settings > Integration > Dynatrace API > Other Dynatrace API tokens
 
 Congratulations you have just created a new API token with installer download permission via an API call. Now lets launch some EC2 instances and automatically deploy the OneAgent.
