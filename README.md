@@ -3,20 +3,20 @@
 ![](./images/partner_program.png)
 
 # Overview
-Hello and welcome to this Dynatrace Partner TechLab. We are launching these as self-paced training for all our partners. During this session we will focus on automation and complete hands on exercies on how to automate creating a monitoring environment, usergroup and user and auto deploy OneAgent to the new environment.
+Hello and welcome to this Dynatrace Partner TechLab. We are launching these as self-paced training for all our partners. During this session we will focus on automation and complete hands on exercises on how to automate creating a monitoring environment, usergroup and user and auto deploy OneAgent to the new environment.
 
 The goals of this tutorial are;
 1. **Environment Management** - Automatically create environments on a managed cluster. Useful for onboarding new customers, training events, creating additional environments etc.
-2. **User Group Management** - Automtically create User Groups with the correct access to your freshly created environment. Useful for onboarding new users, training events and user management.
-3. **User Management** - Automtically create Users and assign them to the correct user group. Useful for onboarding new users, training events and user management.
-4. **API token Management** - Automatically create API tokens with the correct roles. Useful for automated Oneagent deployments, integrations, training events, key rotation etc.
+2. **User Group Management** - Automatically create User Groups with the correct access to your freshly created environment. Useful for onboarding new users, training events and user management.
+3. **User Management** - Automatically create Users and assign them to the correct user group. Useful for onboarding new users, training events and user management.
+4. **API token Management** - Automatically create API tokens with the correct roles. Useful for automated OneAgent deployments, integrations, training events, key rotation etc.
 5. **Automated OneAgent Deployment** - Start ec2 instances and automatically install and configure the OneAgent. Useful for fast deployments of the OneAgent and ensuring new resources are implemented. 
 
-First we will run these setps individually so you get a feel for how they operate then we will provide a script that allows you to do it all at once.
+First we will run these steps individually so you get a feel for how they operate then we will provide a script that allows you to do it all at once.
 
 ## Pre-Requisites
 1. You need an AWS account. If you don't have one [get one here](https://aws.amazon.com/)
-1. AWS Access key and secret access key for an IAM user with rigths ec2:RunInstances &  ec2:DescribeImages
+1. AWS Access key and secret access key for an IAM user with rights ec2:RunInstances,  ec2:DescribeImages & ec2:CreateTags
 1. You need a Dynatrace Managed Cluster license. If you don't have one, reach out to your Dynatrace Partner Program Manager (PPM) to be granted a trial license.
 
 Region | Name | Email
@@ -26,8 +26,8 @@ EMEA | Patricia Jesus Silva | [patricia.jesus.silva@dynatrace.com](mailto:patric
 LATAM | Luiz Rodrigues | [Luiz.Rodrigues@dynatrace.com](mailto:Luiz.Rodrigues@dynatrace.co)
 NORAM | Jamie Mallett | [Jamie.Mallett@dynatrace.com](mailto:Jamie.Mallett@dynatrace.com)
 
-1. You need a Managed Cluster. A single trial node is sufficient. Thic could be run on a VM or in your EC2 account [view specs](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-managed/installation/dynatrace-managed-hardware-and-system-requirements/)
-1. Optional: ActiveGates - An ActiveGate is not required to complete these exercises but depending on your install and security requirements you may also require a CLuster and/or Environment ActiveGate. For more info see [When do I need to install an ActiveGate?](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/basic-concepts/when-do-i-need-to-install-an-activegate/)
+1. You need a Managed Cluster. A single trial node is sufficient. This could be run on a VM or in your EC2 account [view specs](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-managed/installation/dynatrace-managed-hardware-and-system-requirements/)
+1. Optional: ActiveGates - An ActiveGate is not required to complete these exercises but depending on your install and security requirements you may also require a Cluster and/or Environment ActiveGate. For more info see [When do I need to install an ActiveGate?](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/basic-concepts/when-do-i-need-to-install-an-activegate/)
 1. [Postman](https://www.postman.com/downloads/) installed
 1. You need to clone or copy the content of this GitHub repo to your local disk!
 
@@ -36,7 +36,7 @@ NORAM | Jamie Mallett | [Jamie.Mallett@dynatrace.com](mailto:Jamie.Mallett@dynat
 **Amazon Web Services (AWS)**
 
 As we are going to use AWS EC2. We have tested this tutorial on eu-west-1 (Ireland) & ..... . To be on the safe side we suggest you pick one of these regions!
-Ensure you have created an IAM user  with rigths ec2:RunInstances &  ec2:DescribeImages 
+Ensure you have created an IAM user  with rights ec2:RunInstances, ec2:DescribeImages & ec2:CreateTags
 Login to your AWS account and navigate to IAM
 ![](./images/preparation/awsconfigure.png)
 
@@ -49,7 +49,7 @@ Once you have your IAM user and role we need a couple of things
 
 You will need to have provisioned your dynatrace managed cluster. For installation instructions please follow the [documentation](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-managed/installation/set-up-a-cluster/)
 
-Once you have have your cluster provisioned we need a couple of things
+Once you have your cluster provisioned we need a couple of things
 1. Your dynatrace managed URL. It should look something like `https://xxxxxx.dynatrace-managed.com`
 2. Cluster API token. Inside CMC go to Settings -> API tokens -> Cluster tokens and select Generate token. Grant it the scope of Service Provider API
 
@@ -61,7 +61,7 @@ Expand the token and copy the API key
 
 **Postman**
 
-For this tutorial we will leverage postman to make our API calls. If you would like to take these concepts and encorporate them into your dynatrace provisioning process you can choose any tool you like providing it can make API calls. 
+For this tutorial we will leverage postman to make our API calls. If you would like to take these concepts and incorporate them into your dynatrace provisioning process you can choose any tool you like providing it can make API calls. 
 
 Once you have installed Postman we need a couple of things
 1. Upload the [postman environment](./postman/TechLab-Managed-Cluster-Automation.postman_environment.json) we have provided.
@@ -95,11 +95,11 @@ Your Dynatrace monitoring environment is where all your Dynatrace performance an
 **When would you create a new monitoring environment?**
 
 It's common to set up multiple monitoring environments so that related entities can be grouped for discrete analysis. For example, you might set up one monitoring environment to monitor and analyze the performance of your production clusters. You might set up a second environment that's dedicated to the performance of your developers' machines and a third environment for your staging servers.
-You might also be running managed as a service for your customers. In that case you would setup separate environments for each customer to ensure their data is segrated.
+You might also be running managed as a service for your customers. In that case you would setup separate environments for each customer to ensure their data is segregated.
 
 **How do you create a new monitoring environment?**
 
-Monitorining environments can be created using the Cluster Management Console but this can be cumbersome if you have a large amount to manage.
+Monitoring environments can be created using the Cluster Management Console but this can be cumbersome if you have a large amount to manage.
 
 In this exercise we will create a new monitoring environment and token management API token via an API call.
 
@@ -107,9 +107,9 @@ In this exercise we will create a new monitoring environment and token managemen
 
 **Request configuration**
 
-Lets have a look at the configuration of this request so we can understand what will happen when we execute it.
+Let's have a look at the configuration of this request so we can understand what will happen when we execute it.
 
-This is a Post request that leverages the cluster v2 API endpoint environments. By making a request to this API enpoint we will create a single new environment on our managed cluster. The environment will be named `TechLab-Managed-Cluster-Automation-x` where the x is  unique number that starts at 1 and will cound upward eachtime your execute the request to make sure the value us unique. Each request will create a single environment, seprate request are required if you wish to create multiple environments.
+This is a Post request that leverages the cluster v2 API endpoint environments. By making a request to this API endpoint we will create a single new environment on our managed cluster. The environment will be named `TechLab-Managed-Cluster-Automation-x` where the x is  unique number that starts at 1 and will cound upward eachtime your execute the request to make sure the value us unique. Each request will create a single environment, separate request are required if you wish to create multiple environments.
 
 **Paramaters**
 
@@ -161,10 +161,15 @@ In our case the script parses the JSON reponse body for the ID and API token of 
     If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
 
 5. Check your new environment now exists in CMC
-6. Access your new environment by clicking on it's name in CMC and then Go to environment
-7. Verify your new environment ID and Token have been set as environment variables in postman
 
-Congratulations you have just created a new environment via an API call. Now lets create a usergroup to grant access to this environment.
+![](./images/monitoringenvironments/creteEnvCMC.png)
+
+6. Access your new environment by clicking on it's name in CMC and then Go to environment
+7. Verify your new envNumber,  envID and envTokenManagementToken have been set as environment variables in postman
+
+![](./images/monitoringenvironments/creteEnvEnvVars.png)
+
+Congratulations you have just created a new environment via an API call. Now Let's create a usergroup to grant access to this environment.
 
 # 2. Creating a new user group
 
@@ -194,9 +199,9 @@ In this exercise we will create a new user group and assign full environment per
 
 **ATTENTION:** There is currently no user group V2 API so we will use the V1 API. In the future we will migrate this guide to V2 when it becomes available.
 
-Lets have a look at the configuration of this request so we can understand what will happen when we execute it.
+Let's have a look at the configuration of this request so we can understand what will happen when we execute it.
 
-This is a Post request that leverages the cluster v1 API endpoint groups. By making a request to this API enpoint we will create a single new user group on our managed cluster with complete environment righst to our previously created monitoring environment. The environment will be named in the same format as the environment, as in  `TechLab-Managed-Cluster-Automation-x` where the x is  unique number that starts at 1 and will cound upward eachtime your execute the request to make sure the value us unique. Each request will create a single user group, seprate request are required if you wish to create multiple user groups.
+This is a Post request that leverages the cluster v1 API endpoint groups. By making a request to this API endpoint we will create a single new user group on our managed cluster with complete environment righst to our previously created monitoring environment. The environment will be named in the same format as the environment, as in  `TechLab-Managed-Cluster-Automation-x` where the x is  unique number that starts at 1 and will cound=t upward each time you execute the request to make sure the value us unique. Each request will create a single user group, separate requests are required if you wish to create multiple user groups.
 
 **Headers**
 
@@ -223,7 +228,7 @@ isClusterAdminGroup | false | This determines if the users is given cluster admi
 3. Click on `Send` to execute the request.
 4. Check that the request received a 200 OK response.
 
-![](./images/monitoringenvironments/creteEnvResp.png)
+![](./images/usergroups/createUgResp.png)
 
     If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
 
@@ -231,7 +236,9 @@ isClusterAdminGroup | false | This determines if the users is given cluster admi
 
 5. Check your new user group now exists in CMC and that all access rights for your matching environment have been granted
 
-Congratulations you have just created a new user group via an API call. Now lets create a user and assign them to this group to grant access to the environment.
+![](./images/usergroups/createUgCMC.png)
+
+Congratulations you have just created a new user group via an API call. Now Let's create a user and assign them to this group to grant access to the environment.
 
 # 3. Creating a new user
 
@@ -259,9 +266,9 @@ In this exercise we will create a new user and assign it to our previously creat
 
 **ATTENTION:** There is currently no user V2 API so we will use the V1 API. In the future we will migrate this guide to V2 when it becomes available.
 
-Lets have a look at the configuration of this request so we can understand what will happen when we execute it.
+Let's have a look at the configuration of this request so we can understand what will happen when we execute it.
 
-This is a Post request that leverages the cluster v1 API endpoint users. By making a request to this API enpoint we will create a single new user on our managed cluster assigned to our previously created user group. The id will be in the  format `userx` where the x is  unique number that starts at 1 and will cound upward eachtime your execute the create environment request. Each request will create a single user , seprate request are required if you wish to create multiple users. In our setup it will only support a single user creation per environment as the values do not change.
+This is a Post request that leverages the cluster v1 API endpoint users. By making a request to this API endpoint we will create a single new user on our managed cluster assigned to our previously created user group. The id will be in the  format `userx` where the x is  unique number that starts at 1 and will cound upward eachtime your execute the create environment request. Each request will create a single user , separate request are required if you wish to create multiple users. In our setup it will only support a single user creation per environment as the values do not change.
 
 **Headers**
 
@@ -287,15 +294,17 @@ groups | TechLab-Managed-Cluster-Automation-\{\{envNumber\}\} | The ID of the gr
 2. Click on `Send` to execute the request.
 3. Check that the request received a 200 OK response.
 
-![](./images/monitoringenvironments/creteEnvResp.png)
+![](./images/users/createUserResp.png)
 
-    If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
+    If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.en
 
     If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
 
 5. Check your new user group now exists in CMC and that all access rights for your matching environment have been granted
 
-Congratulations you have just created a new group via an API call. Now lets create a user and assign them to this group to grant access to the environment.
+![](./images/users/createUserCMC.png)
+
+Congratulations you have just created a new user via an API call. Now Let's create an environment API token so we can automate our OneAgent installation.
 
 # 4. Creating a dynatrace environment API token
 
@@ -323,11 +332,11 @@ In this exercise we will create a new API token with InstallerDownload permissio
 
 **ATTENTION:** There is currently no tokens V2 environment API so we will use the V1 API. In the future we will migrate this guide to V2 when it becomes available.
 
-Lets have a look at the configuration of this request so we can understand what will happen when we execute it.
+Let's have a look at the configuration of this request so we can understand what will happen when we execute it.
 
 This is a Post request that leverages the environment v1 API endpoint tokens. This is different than the previous endpoints as this is now and environment endpoint where we have previously used cluster endpoints. Environment endpoints apply specifically to the specified environment. You will notice in the url we are now specifing an environment in the parameter \{\{envID\}\}, this was extracted from the response when the create environmet request was executed. 
 
-By making a request to this API enpoint we will create a new API token on our new environment with the rights to download the OneAgent Installer. For security we will set the token to expire in 4 hours. This means you need to create youe ec2 instance within this time.
+By making a request to this API endpoint we will create a new API token on our new environment with the rights to download the OneAgent Installer. For security we will set the token to expire in 4 hours. This means you need to create youe ec2 instance within this time.
 
 **Headers**
 
@@ -356,16 +365,17 @@ In our case the script parses the JSON reponse body for the new API token and se
 2. Click on `Send` to execute the request.
 3. Check that the request received a 200 OK response.
 
-![](./images/monitoringenvironments/creteEnvResp.png)
+![](./images/envtoken/createInstTokResp.png)
 
     If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
 
     If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
 
 5. Check that the paasToken environment variable has been set in postman
-6. Check your new token exists in your environment under Settings > Integration > Dynatrace API > Other Dynatrace API tokens
 
-Congratulations you have just created a new API token with installer download permission via an API call. Now lets launch some EC2 instances and automatically deploy the OneAgent.
+![](./images/envtoken/createInstTokVars.png)
+
+Congratulations you have just created a new API token with installer download permission via an API call. Now Let's launch some EC2 instances and automatically deploy the OneAgent.
 
 # 5. Get AWS AMI ID
 
@@ -376,13 +386,15 @@ As this is not a dynatrace API call and is purely to get an AMI ID we will not c
 2. Click on `Send` to execute the request.
 3. Check that the request received a 200 OK response.
 
-![](./images/monitoringenvironments/getAMI.png)
+![](./images/ami/getAMIResp.png)
 
     If you get a 401 error check the value of your accessKeyID, secretAccessKey and region environment variables. Ensure both the initial and current values are set and the same. If they are verfiy you have added the correct roles in IAM.
 
 5. Check that the ImageId environment variable has been set in postman
 
-Now that we have the latest Ubunntu image AMI we can launch our ec2 instance.
+![](./images/ami/getAMIVars.png)
+
+Now that we have the latest Ubunntu image AMI we can launch our ec2 instances.
 
 # 6. Launching easyTravel ec2 Instances and auto deploying the OneAgent
 
@@ -401,7 +413,7 @@ We will leverage the aws RunInstances API call to start 2 instances of the lates
 
 **ATTENTION:** There are some values that are unique to your ec2 account that you will have to set for this request to work.
 
-Lets have a look at the configuration of this request so we can understand what will happen when we execute it.
+Let's have a look at the configuration of this request so we can understand what will happen when we execute it.
 
 This is a Post request that leverages the aws API endpoint to execute the action runInstances. This API call will start an instance of the latest Ubuntu image from the AMI that was gathered in the previous step.
 
@@ -427,7 +439,7 @@ The secret sauce here that you should be aware of is [AWS UserData](https://docs
 This is part of postman. You can use pre-request scripts in Postman to execute JavaScript before a request runs. You can find more details [here](https://learning.postman.com/docs/postman/scripts/pre-request-scripts/)
 In our case the script sets the correct host group when requests are executed and updates the userdata to be sent to aws.
 
-**ATTENTION:** When we create these hosts they are set to auto terminate after 8 hours. If you do not want them to auto terminate then please comment out line 35. The host is alos set to auto terminate on shutdown so keep in mind even if you comment this line out the host would still terminate if you shut it down.
+**ATTENTION:** When we create these hosts they are set to auto terminate after 8 hours. If you do not want them to auto terminate then please comment out line 38. The host is alos set to auto terminate on shutdown so keep in mind even if you comment this line out the host would still terminate if you shut it down.
 
 To change the shutdown behavior of an instance using the console (only after you have started your instance)
 
@@ -435,31 +447,33 @@ To change the shutdown behavior of an instance using the console (only after you
 2. In the navigation pane, choose Instances.
 3. Select the instance, and choose Actions, Instance Settings, Change Shutdown Behavior. The current behavior is already selected.
 4. To change the behavior, select an option from the Shutdown behavior list, and then choose Apply.
-![](./images/monitoringenvironments/shutdown_behavior_dialog.png)
+![](./images/runinstances/shutdown_behavior_dialog.png)
 
 
 **Executing the request**
 This request is designed to start 2 instance of easyTravel, one with the host group production and the second with the host group test. We will execute the request twice to acheive this. No changes are required as they are done automatically
 1. Open the Launch AWS easyTravel Instances request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 200 OK response.
+3. Check that the request received a 200 OK response and the Production instance name tag.
 
-![](./images/monitoringenvironments/runInstances.png)
+![](./images/runinstances/runInstancesRespProd.png)
 
     If you get a 401 error check the value of your accessKeyID, secretAccessKey and region environment variables. Ensure both the initial and current values are set and the same. If they are verfiy you have added the correct roles in IAM.
 
 5. Execute the request again to start the second instance.
-6. Check that the request received a 200 OK response.
+6. Check that the request received a 200 OK response and the Test instance name tag.
 
-![](./images/monitoringenvironments/runInstances.png)
+![](./images/runinstances/runInstancesRespTest.png)
 
     If you get a 401 error check the value of your accessKeyID, secretAccessKey and region environment variables. Ensure both the initial and current values are set and the same. If they are verfiy you have added the correct roles in IAM.
 
 7. Inside your AWS console chech the instance have been created
 
-![](./images/monitoringenvironments/awsConsole.png)
+![](./images/runinstances/runInstancesEC2.png)
 
 8. Check the deployment status in dynatrace to see if your hosts are now monitored. Please note this can take 5-10 mins. 
+
+![](./images/runinstances/runInstancesDT.png)
 
 Congratulations you have just created 2 new ec2 instances and auto deployed the OneAgent.
 
@@ -467,5 +481,199 @@ Congratulations you have just created 2 new ec2 instances and auto deployed the 
 If after 10 mins your hosts have not appeared in dynatrace check the following.
 1. In the AWS EC2 console select one of your instances and click on Actions > Image settings > View/Change User Data.
     * Verify the userdata has not been corrupted
-    * Check the values for your managed enviornment URL amd API token in the wget comman
+    * Check the values for your managed enviornment URL amd API token in the wget command
 2. Log on to your instance and view log /var/log/cloud-init-output.log to check for errors in downloading, installing or connection of your OneAgent.
+
+# 7. Deleting a user
+
+To delete a user ensure you have completed the creating a new user exercise.
+
+## Deleting a user background 
+
+**When would you delete user?**
+
+User are created to allow access. If a user leaves a company or does no longer require access then their account should be deleted.
+
+**How do you delete a user?**
+
+Assuming you are not using any user integration then users can be delete using the Cluster Management Console but this can be cumbersome if you have a large amount to manage.
+
+In this exercise we will delete the previously created user via an API call. In a real world scenario this call could be automatically trigger if a user left the company.
+
+## Deleting a user configuration
+
+**Request configuration**
+
+**ATTENTION:** There is currently no user V2 API so we will use the V1 API. In the future we will migrate this guide to V2 when it becomes available.
+
+Let's have a look at the configuration of this request so we can understand what will happen when we execute it.
+
+This is a Delete request that leverages the cluster v1 API endpoint users. By making a request to this API endpoint we will delete the previously created user. We will supply the ID of the previously created user in the URL.
+
+**Headers**
+
+We will supply 2 headers in this request;
+Key | Value | Description
+------------ | ------------- | -------------
+Authorization | Api-Token \{\{dtAPI\}\} | This provides our cluster API token to authenticate the request. The token is stored in the environment variable \{\{dtAPI\}\}
+Content-Type | application/json | The response contains JSON payload
+
+**Executing the request**
+1. Open the Delete User request.
+2. Click on `Send` to execute the request.
+3. Check that the request received a 200 OK response.
+
+![](./images/users/deleteUserResp.png)
+
+    If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.en
+
+    If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
+
+4. Check your new user group no longer exists in CMC.
+
+Congratulations you have just deleted a  user via an API call. Now Let's delete the User Group. In real life you probably wouldn't have to delete the UG if a user left as they are not user specific.
+
+# 8. Deleting a user group
+
+To delete a user group ensure you have completed the creating a new user group exercise.
+
+## Deleting a user group background 
+
+**When would you delete a user group group?**
+
+User groups are created to controll access. You would delete a user group if it is no longer required. This could be if all environments assigned to it have been deleted.
+
+**How do you delete a user group?**
+
+Assuming you are not using any user integration then user groups can be deleted using the Cluster Management Console but this can be cumbersome if you have a large amount to manage.
+
+In this exercise we will delete the previously created user group via an API call.
+
+## Deleting a user group configuration
+
+**Request configuration**
+
+**ATTENTION:** There is currently no user group V2 API so we will use the V1 API. In the future we will migrate this guide to V2 when it becomes available.
+
+Let's have a look at the configuration of this request so we can understand what will happen when we execute it.
+
+This is a Delete request that leverages the cluster v1 API endpoint groups. By making a request to this API endpoint we will delete the previously created user group. We will supply the ID of the previously created user group in the URL.
+
+**Headers**
+
+We will supply 2 headers in this request;
+Key | Value | Description
+------------ | ------------- | -------------
+Authorization | Api-Token \{\{dtAPI\}\} | This provides our cluster API token to authenticate the request. The token is stored in the environment variable \{\{dtAPI\}\}
+Content-Type | application/json | The response contains JSON payload
+
+**Executing the request**
+1. Open the Delete User Group request.
+2. Click on `Send` to execute the request.
+3. Check that the request received a 200 OK response.
+
+![](./images/usergroups/deleteUgResp.png)
+
+    If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
+
+    If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
+
+4. Check your new user group no longer exists in CMC.
+
+Congratulations you have just deleted a  user group via an API call. Now Let's disable our previously created environment.
+
+# 9. Disable an environment
+
+To disable an environment ensure you have completed the creating an environment exercise.
+
+## Disable an environment background 
+
+**When would you disable an environment?**
+
+You must first disable an environment if you wish to delete it.
+
+**How do you disable an environment?**
+
+Environments can be disabled using the Cluster Management Console but this can be cumbersome if you have a large amount to manage.
+
+In this exercise we will disable the previously created environment via an API call.
+
+## Disable an environment configuration
+
+**Request configuration**
+
+Let's have a look at the configuration of this request so we can understand what will happen when we execute it.
+
+This is a Put request that leverages the cluster v2 API endpoint environments. By making a request to this API endpoint we will disable the previously created environment. We will supply the ID of the previously created environment in the URL.
+
+**Headers**
+
+We will supply 2 headers in this request;
+Key | Value | Description
+------------ | ------------- | -------------
+Authorization | Api-Token \{\{dtAPI\}\} | This provides our cluster API token to authenticate the request. The token is stored in the environment variable \{\{dtAPI\}\}
+Content-Type | application/json | The response contains JSON payload
+
+**Body**
+For this request we will supply the same Body as the create environment request but with the state set as `DISABLED` this time.
+
+**Executing the request**
+1. Open the Disable Environment request.
+2. Click on `Send` to execute the request.
+3. Check that the request received a 200 OK response.
+
+![](./images/monitoringenvironments/disableEnvResp.png)
+
+    If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
+
+    If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
+
+Congratulations you have just disabled an environment via an API call. Now Let's delete it.
+
+# 10. Delete an environment
+
+To delete an environment ensure you have completed the disable an environment exercise.
+
+## Delete an environment background 
+
+**When would you delete an environment?**
+
+You would delete an environment when both the environment and historical data are no longer required.
+
+**How do you delete an environment?**
+
+Environments can be deleted using the Cluster Management Console but this can be cumbersome if you have a large amount to manage.
+
+In this exercise we will delete the previously created environment via an API call.
+
+## Delete an environment configuration
+
+**Request configuration**
+
+Let's have a look at the configuration of this request so we can understand what will happen when we execute it.
+
+This is a Delete request that leverages the cluster v2 API endpoint environments. By making a request to this API endpoint we will delete the previously disabled environment. We will supply the ID of the previously disabled environment in the URL.
+
+**Headers**
+
+We will supply 2 headers in this request;
+Key | Value | Description
+------------ | ------------- | -------------
+Authorization | Api-Token \{\{dtAPI\}\} | This provides our cluster API token to authenticate the request. The token is stored in the environment variable \{\{dtAPI\}\}
+Content-Type | application/json | The response contains JSON payload
+
+**Tests**
+To clean up postman so you can run through these exercises in the future all the environment variables that were dynamically created are deleted.
+
+**Executing the request**
+1. Open the Delete Environment request.
+2. Click on `Send` to execute the request.
+3. Check that the request received a 200 OK response.
+
+![](./images/monitoringenvironments/deleteEnvResp.png)
+
+    If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
+
+    If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
+
+Congratulations you have just deleted an environment via an API call. Now Let's disable our previously created environment.
