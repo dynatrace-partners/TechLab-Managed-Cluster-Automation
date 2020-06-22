@@ -2,7 +2,7 @@
 
 ![](./images/partner_program.png)
 
-# 1. Overview
+# Overview
 Hello and welcome to this Dynatrace Partner TechLab. We are launching these as self-paced training for all our partners. During this session we will focus on automation and complete hands on exercies on how to automate creating a monitoring environment, usergroup and user and auto deploy OneAgent to the new environment.
 
 The goals of this tutorial are;
@@ -80,7 +80,7 @@ Repeat the same process to import TechLab-Managed-Cluster-Automation.postman_col
 
     * Click on update to save your changes
 
-# 2. Creating a new monitoring environment
+# 1. Creating a new monitoring environment
 
 **ATTENTION:** You must execute these requests in the order they are listed in here as the requests gather response data and create new environment variables that are used in later requests.
 
@@ -166,7 +166,7 @@ In our case the script parses the JSON reponse body for the ID and API token of 
 
 Congratulations you have just created a new environment via an API call. Now lets create a usergroup to grant access to this environment.
 
-# 3. Creating a new user group
+# 2. Creating a new user group
 
 To create a new user group ensure you have completed the creating a new monitoring environment exercise.
 
@@ -233,7 +233,7 @@ isClusterAdminGroup | false | This determines if the users is given cluster admi
 
 Congratulations you have just created a new user group via an API call. Now lets create a user and assign them to this group to grant access to the environment.
 
-# 4. Creating a new user
+# 3. Creating a new user
 
 To create a new user ensure you have completed the creating a new monitoring environment & user group exercises.
 
@@ -297,7 +297,7 @@ groups | TechLab-Managed-Cluster-Automation-\{\{envNumber\}\} | The ID of the gr
 
 Congratulations you have just created a new group via an API call. Now lets create a user and assign them to this group to grant access to the environment.
 
-# 5. Creating a dynatrace environment API token
+# 4. Creating a dynatrace environment API token
 
 To create a dynatrace environment API token ensure you have completed the creating a new monitoring environment exercise.
 
@@ -367,7 +367,7 @@ In our case the script parses the JSON reponse body for the new API token and se
 
 Congratulations you have just created a new API token with installer download permission via an API call. Now lets launch some EC2 instances and automatically deploy the OneAgent.
 
-# 6. Get AWS AMI ID
+# 5. Get AWS AMI ID
 
 As this is not a dynatrace API call and is purely to get an AMI ID we will not cover this in as much detail. For more information on it please see the [aws documentation](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImages.html). This request polls the AWS API to get the latest Ubuntu AMI in your region, it is filtered to the Ubuntu Cloud Account. This way when you launch an ec2 instance in the next step it will use this AMI to ensure you are on an up-to-date version. WHen you send the request the AMI ID will be stored as environment variable ImageId.
 
@@ -384,7 +384,7 @@ As this is not a dynatrace API call and is purely to get an AMI ID we will not c
 
 Now that we have the latest Ubunntu image AMI we can launch our ec2 instance.
 
-# 7. Launching easyTravel ec2 Instances and auto deploying the OneAgent
+# 6. Launching easyTravel ec2 Instances and auto deploying the OneAgent
 
 To launch the easytravel ec2 instances ensure you have created your environment, intsaller token and got the AWS AMI for the latest Ubuntu release. 
 As this is not a dynatrace API call and is used to start some ec2 we will not cover this in as much detail but we will cove how it auto deploys the OneAgent. For more information on it please see the [aws documentation](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html)
@@ -393,7 +393,7 @@ As this is not a dynatrace API call and is used to start some ec2 we will not co
 
 **How do you launc an easyTravel ec2 Instances and auto deploying the OneAgent?**
 
-We will leverage the aws RunInstances API call to start 2 instances of the latest Ubuntu AMI that we gathered in the previous call. This will be a blank Ubuntu image so we will leverage [AWS UserData](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html) to install and configure both easyTravel and the OneAgent. The UserData is sent as base64-encoded text but if you want to see the commands that are excuted I have provided a sample script [here](./aws/userData.txt). This sample is not exactly the same as the Postman execution as we dynamically set some values in the postman execution we will pass the correct dynatrace envirornment and API token details and we will set a host group. We will execute this request twice, the first will create a instance with th host group production and the second will create another instance with th host group test.
+We will leverage the aws RunInstances API call to start 2 instances of the latest Ubuntu AMI that we gathered in the previous call. This will be a blank Ubuntu image so we will leverage [AWS UserData](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html) to install and configure both easyTravel and the OneAgent. The UserData is sent as base64-encoded text but if you want to see the commands that are excuted I have provided a sample script [here](./aws/userData.txt). This sample is not exactly the same as the Postman execution as we dynamically set some values in the postman execution we will pass the correct dynatrace envirornment and API token details and we will set a host group. We will execute this request twice, the first will create a instance with the host group production and the second will create another instance with the host group test.
 
 ## Launching easyTravel ec2 Instances and auto deploying the OneAgent configuration
 
@@ -403,44 +403,69 @@ We will leverage the aws RunInstances API call to start 2 instances of the lates
 
 Lets have a look at the configuration of this request so we can understand what will happen when we execute it.
 
-This is a Post request that leverages the environment v1 API endpoint tokens. This is different than the previous endpoints as this is now and environment endpoint where we have previously used cluster endpoints. Environment endpoints apply specifically to the specified environment. You will notice in the url we are now specifing an environment in the parameter \{\{envID\}\}, this was extracted from the response when the create environmet request was executed. 
+This is a Post request that leverages the aws API endpoint to execute the action runInstances. This API call will start an instance of the latest Ubuntu image from the AMI that was gathered in the previous step.
 
-By making a request to this API enpoint we will create a new API token on our new environment with the rights to download the OneAgent Installer. For security we will set the token to expire in 4 hours. This means you need to create youe ec2 instance within this time.
+**Paramaters**
 
-**Headers**
+There are a lot of paramaters in this request but I will only cover the ones relevant to dynatrace or that you may need to change for your environment.
 
-We will supply 2 headers in this request;
-Key | Value | Description
------------- | ------------- | -------------
-Authorization | Api-Token \{\{envTokenManagementToken\}\} | This provides our environment API token to authenticate the request. The token is stored in the environment variable \{\{envTokenManagementToken\}\} which was created when we ran our Create Environment request.
-Content-Type | application/json | The response contains JSON payload
+You may need to set the following paramaters. Determine if you need to set them by reading the table below. If you do need to set them then add the value in postman and ensure you tick the box to the left of the key name to enable it. 
+Key | Value | Requirement | Description
+------------ | ------------- | ------------- | -------------
+KeyName | The name of your key pair | Optional | The name of the key pair used to connect to your instance. You can create a key pair using [CreateKeyPair](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateKeyPair.html). If you do not specify a key pair, you can't connect to the instance. In our usecase there is no direct requirement to access the environment but you may find it useful if you want to perform troubleshooting or use the intance in the future for other things.
+SecurityGroupId | The ID of your security group | Optional | If you don't specify a security group ID, aws use the default security group. For more information, see [Security Groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html). Depending on your setup this may be required. A security group acts as a virtual firewall for your instance to control incoming and outgoing traffic so you may require a specific one to allow the correct access to and from your instance. 
 
-**Body**
+The secret sauce here that you should be aware of is [AWS UserData](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html). When we launch this request we suply a set of commands to be executed on the ec2 instance at startup. The userdata is preconfigured, do not make changes or it may no longer work. In our case these commands will do the following;
+1. Updates the package lists by running apt-get update
+2. Installs the required packages
+3. Downloads and installs the latest version of easyTravel
+4. Makes required config changes to easyTravel including API call to set correct public DNS of instance for the source of the traffic that is generated.
+5. Installs the OneAgent for your newly created environment leveraging the API token you created in exercise 5
+6. Starts the easyTravel angular app. This means you don't even need to access the environment.
 
-The JSON body of the request provides the required information. The body must not provide an ID as it will be automatically assigned by the Dynatrace server.
-Key | Value | Description
------------- | ------------- | -------------
-name | TechLab-Managed-Cluster-Automation | This will be the name of our token. Dynatrace doesn't enforce unique token names. You can create multiple tokens with the same name. Be sure to provide a meaningful name for each token you generate. Proper token naming helps you to efficiently manage your tokens and perhaps delete them when they're no longer needed.
-scopes | InstallerDownload | This is the permissions the token will hold. In our case we only require the installer download. FOr a full list of permissions see [token permission](https://www.dynatrace.com/support/help/dynatrace-api/basics/dynatrace-api-authentication#token-permissions)
-expiresIn | 4 HOURS | This is an optional parameter that will cause the token to expire after a given time. It is strongly recommende to rotate your tokens frequently and this parameter can help you with that but be careful when using integrations. If not set then the token never expires.
+**Pre-request script**
+This is part of postman. You can use pre-request scripts in Postman to execute JavaScript before a request runs. You can find more details [here](https://learning.postman.com/docs/postman/scripts/pre-request-scripts/)
+In our case the script sets the correct host group when requests are executed and updates the userdata to be sent to aws.
 
-**Tests**
+**ATTENTION:** When we create these hosts they are set to auto terminate after 8 hours. If you do not want them to auto terminate then please comment out line 35. The host is alos set to auto terminate on shutdown so keep in mind even if you comment this line out the host would still terminate if you shut it down.
 
-This is part of postman and not a requirement to create an environment via an API call. You can use Tests in Postman to execute JavaScript after a request runs. You can find more details [here](https://learning.postman.com/docs/postman/scripts/test-scripts/)
-In our case the script parses the JSON reponse body for the new API token and sets it as environment variable paasToken so we can use it in the Launch AWS easyTravel Instances request to auto deploy the OneAgent.
+To change the shutdown behavior of an instance using the console (only after you have started your instance)
+
+1. Open the Amazon EC2 console at `https://console.aws.amazon.com/ec2/`.
+2. In the navigation pane, choose Instances.
+3. Select the instance, and choose Actions, Instance Settings, Change Shutdown Behavior. The current behavior is already selected.
+4. To change the behavior, select an option from the Shutdown behavior list, and then choose Apply.
+![](./images/monitoringenvironments/shutdown_behavior_dialog.png)
+
 
 **Executing the request**
-1. Open the Create Installer Token request.
+This request is designed to start 2 instance of easyTravel, one with the host group production and the second with the host group test. We will execute the request twice to acheive this. No changes are required as they are done automatically
+1. Open the Launch AWS easyTravel Instances request.
 2. Click on `Send` to execute the request.
 3. Check that the request received a 200 OK response.
 
-![](./images/monitoringenvironments/creteEnvResp.png)
+![](./images/monitoringenvironments/runInstances.png)
 
-    If you get a could not send request error check the value of your dtManaged environment variable and ensure it is in the format of `xxxxxx.dynatrace-managed.com` without the `https://`. Ensure both the initial and current values are set and the same.
+    If you get a 401 error check the value of your accessKeyID, secretAccessKey and region environment variables. Ensure both the initial and current values are set and the same. If they are verfiy you have added the correct roles in IAM.
 
-    If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
+5. Execute the request again to start the second instance.
+6. Check that the request received a 200 OK response.
 
-5. Check that the paasToken environment variable has been set in postman
-6. Check your new token exists in your environment under Settings > Integration > Dynatrace API > Other Dynatrace API tokens
+![](./images/monitoringenvironments/runInstances.png)
 
-Congratulations you have just created a new API token with installer download permission via an API call. Now lets launch some EC2 instances and automatically deploy the OneAgent.
+    If you get a 401 error check the value of your accessKeyID, secretAccessKey and region environment variables. Ensure both the initial and current values are set and the same. If they are verfiy you have added the correct roles in IAM.
+
+7. Inside your AWS console chech the instance have been created
+
+![](./images/monitoringenvironments/awsConsole.png)
+
+8. Check the deployment status in dynatrace to see if your hosts are now monitored. Please note this can take 5-10 mins. 
+
+Congratulations you have just created 2 new ec2 instances and auto deployed the OneAgent.
+
+**Troubleshooting**
+If after 10 mins your hosts have not appeared in dynatrace check the following.
+1. In the AWS EC2 console select one of your instances and click on Actions > Image settings > View/Change User Data.
+    * Verify the userdata has not been corrupted
+    * Check the values for your managed enviornment URL amd API token in the wget comman
+2. Log on to your instance and view log /var/log/cloud-init-output.log to check for errors in downloading, installing or connection of your OneAgent.
