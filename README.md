@@ -36,6 +36,7 @@ NORAM | Jamie Mallett | [Jamie.Mallett@dynatrace.com](mailto:Jamie.Mallett@dynat
 **Amazon Web Services (AWS)**
 
 As we are going to use AWS EC2. We have tested this tutorial on eu-west-1 (Ireland) & ..... . To be on the safe side we suggest you pick one of these regions!
+
 Ensure you have created an IAM user  with rights ec2:RunInstances, ec2:DescribeImages & ec2:CreateTags I recommend you create a user for this with only these rights that can be removed in the future.
 
 Login to your AWS account and navigate to IAM > Users > Add user and complete the following
