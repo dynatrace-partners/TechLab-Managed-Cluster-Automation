@@ -425,7 +425,7 @@ You may need to set the following Parameters. Determine if you need to set them 
 Key | Value | Requirement | Description
 ------------ | ------------- | ------------- | -------------
 KeyName | The name of your key pair | Optional | The name of the key pair used to connect to your instance. You can create a key pair using [CreateKeyPair](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateKeyPair.html). If you do not specify a key pair, you can't connect to the instance. In our use case there is no direct requirement to access the environment, but you may find it useful if you want to perform troubleshooting or use the instance in the future for other things.
-SecurityGroupId | The ID of your security group | Optional | If you don't specify a security group ID, aws use the default security group. For more information, see [Security Groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html). Depending on your setup this may be required. A security group acts as a virtual firewall for your instance to control incoming and outgoing traffic so you may require a specific one to allow the correct access to and from your instance. 
+SecurityGroupId | The ID of your security group | Optional | If you don't specify a security group ID, aws use the default security group. For more information, see [Security Groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html). Depending on your setup this may be required. A security group acts as a virtual firewall for your instance to control incoming and outgoing traffic so you may require a specific one to allow the correct access to and from your instance. At a minimum you will need inbound on 9080 & 8079 to access the easyTravel & easyTravel Angular front ends and outboun either 443 for direct OneAgent communication or 9999 via an ActiveGate. 
 
 The secret sauce here that you should be aware of is [AWS UserData](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html). When we launch this request we supply a set of commands to be executed on the ec2 instance at start up. The userdata is preconfigured, do not make changes or it may no longer work. In our case these commands will do the following;
 1. Updates the package lists by running apt-get update
@@ -620,7 +620,7 @@ For this request we will supply the same Body as the create environment request,
 **Executing the request**
 1. Open the Disable Environment request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 200 OK response.
+3. Check that the request received a 204 No Content response.
 
 ![](./images/monitoringenvironments/disableEnvResp.png)
 
@@ -668,7 +668,7 @@ To clean up postman so you can run through these exercises in the future all the
 **Executing the request**
 1. Open the Delete Environment request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 200 OK response.
+3. Check that the request received a 204 No Content response.
 
 ![](./images/monitoringenvironments/deleteEnvResp.png)
 
