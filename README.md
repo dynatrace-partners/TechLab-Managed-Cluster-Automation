@@ -9,7 +9,7 @@ The goals of this tutorial are;
 1. **Environment Management** - Automatically create environments on a managed cluster. Useful for onboarding new customers, training events, creating additional environments etc.
 2. **User Group Management** - Automatically create User Groups with the correct access to your freshly created environment. Useful for onboarding new users, training events and user management.
 3. **User Management** - Automatically create Users and assign them to the correct user group. Useful for onboarding new users, training events and user management.
-4. **API token Management** - Automatically create API tokens with the correct roles. Useful for automated OneAgent deployments, integrations, training events, key rotation etc.
+4. **Environment API token Management** - Automatically create environment API tokens with the correct roles. Useful for automated OneAgent deployments, integrations, training events, key rotation etc.
 5. **Automated OneAgent Deployment** - Start ec2 instances and automatically install and configure the OneAgent. Useful for fast deployments of the OneAgent and ensuring new resources are implemented. 
 
 First we will run these steps individually so you get a feel for how they operate then we will provide a script that allows you to do it all at once.
