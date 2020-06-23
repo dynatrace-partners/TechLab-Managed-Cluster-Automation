@@ -36,9 +36,40 @@ NORAM | Jamie Mallett | [Jamie.Mallett@dynatrace.com](mailto:Jamie.Mallett@dynat
 **Amazon Web Services (AWS)**
 
 As we are going to use AWS EC2. We have tested this tutorial on eu-west-1 (Ireland) & ..... . To be on the safe side we suggest you pick one of these regions!
-Ensure you have created an IAM user  with rights ec2:RunInstances, ec2:DescribeImages & ec2:CreateTags
-Login to your AWS account and navigate to IAM
+Ensure you have created an IAM user  with rights ec2:RunInstances, ec2:DescribeImages & ec2:CreateTags I recommend you create a user for this with only these rights that can be removed in the future.
+
+Login to your AWS account and navigate to IAM > Users > Add user and complete the following
+1. Give your user a name and select Programmatic access
+
 ![](./images/preparation/awsconfigure.png)
+
+2. Select Create Group
+
+![](./images/preparation/awsCreateGroup.png)
+
+3. Name your group and select Create policy. The Policy creater should open in a new tab.
+
+![](./images/preparation/awsGroupName.png)
+
+4. Choose the service ec2 and under actions search and add RunInstances, DescribeImages & CreateTags. Then click Review policy
+
+![](./images/preparation/awsCreatePolicy.png)
+
+5. It should look like the following. Select Create Policy
+
+![](./images/preparation/awsPolicy.png)
+
+6. Return to your previous tab, click Refresh and search for you new policy. Tick the policy and select Create Group
+
+![](./images/preparation/awsPolicyGroup.png)
+
+7. Ensure your group has beed added for your user and the policy is attached. Click Next:tags. Tags are optional so add one if you wish and click Next:Review
+
+![](./images/preparation/awsSetPer.png)
+
+8. Your new user should look like the following. Click Create User. Store your credentials, you can download csv to save them in a file. 
+
+![](./images/preparation/awsUserSum.png)
 
 Once you have your IAM user and role we need a couple of things
 1. Your AWS Access Key ID. It should look something like `AKIAIOSFODNN7EXAMPLE`
@@ -152,7 +183,7 @@ In our case the script parses the JSON response body for the ID and API token of
 
     * On the Headers tab hover over \{\{dtAPI\}\} to ensure it has been sent
 3. Click on `Send` to execute the request.
-4. Check that the request received a 201 Created response and the response body contains the id, name and token for your new environment
+4. Check that the request received a `201 Created` response and the response body contains the id, name and token for your new environment
 
 ![](./images/monitoringenvironments/creteEnvResp.png)
 
@@ -226,7 +257,7 @@ isClusterAdminGroup | false | This determines if the user is given cluster admin
 1. Open the User Group request.
 2. Verify your additional environment variables envNumber & envID have been set (these are automatically created and set when you executed the Create Environment request).
 3. Click on `Send` to execute the request.
-4. Check that the request received a 200 OK response.
+4. Check that the request received a `200 OK` response.
 
 ![](./images/usergroups/createUgResp.png)
 
@@ -292,7 +323,7 @@ groups | TechLab-Managed-Cluster-Automation-\{\{envNumber\}\} | The ID of the gr
 **Executing the request**
 1. Open the Create User request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 200 OK response.
+3. Check that the request received a `200 OK` response.
 
 ![](./images/users/createUserResp.png)
 
@@ -363,7 +394,7 @@ In our case the script parses the JSON response body for the new API token and s
 **Executing the request**
 1. Open the Create Installer Token request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 200 OK response.
+3. Check that the request received a `201 Created` response.
 
 ![](./images/envtoken/createInstTokResp.png)
 
@@ -384,7 +415,7 @@ As this is not a dynatrace API call and is purely to get an AMI ID we will not c
 **Executing the request**
 1. Open the Get AWS AMI ID request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 200 OK response.
+3. Check that the request received a `200 OK` response.
 
 ![](./images/ami/getAMIResp.png)
 
@@ -454,14 +485,14 @@ To change the shutdown behaviour of an instance using the console (only after yo
 This request is designed to start 2 instance of easyTravel, one with the host group production and the second with the host group test. We will execute the request twice to achieve this. No changes are required as they are done automatically
 1. Open the Launch AWS easyTravel Instances request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 200 OK response and the Production instance name tag.
+3. Check that the request received a `200 OK` response and the Production instance name tag.
 
 ![](./images/runinstances/runInstancesRespProd.png)
 
     If you get a 401 error check the value of your accessKeyID, secretAccessKey and region environment variables. Ensure both the initial and current values are set and the same. If they are verify you have added the correct roles in IAM.
 
 5. Execute the request again to start the second instance.
-6. Check that the request received a 200 OK response and the Test instance name tag.
+6. Check that the request received a `200 OK` response and the Test instance name tag.
 
 ![](./images/runinstances/runInstancesRespTest.png)
 
@@ -521,7 +552,7 @@ Content-Type | application/json | The response contains JSON payload
 **Executing the request**
 1. Open the Delete User request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 200 OK response.
+3. Check that the request received a `200 OK` response.
 
 ![](./images/users/deleteUserResp.png)
 
@@ -570,7 +601,7 @@ Content-Type | application/json | The response contains JSON payload
 **Executing the request**
 1. Open the Delete User Group request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 200 OK response.
+3. Check that the request received a `200 OK` response.
 
 ![](./images/usergroups/deleteUgResp.png)
 
@@ -620,7 +651,7 @@ For this request we will supply the same Body as the create environment request,
 **Executing the request**
 1. Open the Disable Environment request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 204 No Content response.
+3. Check that the request received a `204 No Content` response.
 
 ![](./images/monitoringenvironments/disableEnvResp.png)
 
@@ -668,7 +699,7 @@ To clean up postman so you can run through these exercises in the future all the
 **Executing the request**
 1. Open the Delete Environment request.
 2. Click on `Send` to execute the request.
-3. Check that the request received a 204 No Content response.
+3. Check that the request received a `204 No Content` response.
 
 ![](./images/monitoringenvironments/deleteEnvResp.png)
 
