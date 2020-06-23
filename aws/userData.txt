@@ -23,5 +23,9 @@ sed -i "1s/.*/&\necho \$publicDNS/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTra
 sed -i "1s/.*/&\npublicDNS=\"curl http:\/\/169.254.169.254\/latest\/meta-data\/public-hostname\"/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
 sed -i "1s/.*/&\necho \"determining public dns\"/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
 sed -i "1s/.*/&\n/" /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh
-sleep 120
+sed -i "s/config.baseLoadHeadlessAngularRatio=0.0/config.baseLoadHeadlessAngularRatio=0.25/" /home/ubuntu/easytravel-2.0.0-x64/resources/easyTravelConfig.properties
+sed -i "s/config.baseLoadHeadlessMobileAngularRatio=0.0/config.baseLoadHeadlessMobileAngularRatio=0.1/" /home/ubuntu/easytravel-2.0.0-x64/resources/easyTravelConfig.properties
+wget  -O Dynatrace-OneAgent.sh "https://xxxxxxx.dynatrace-managed.com/e/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/api/v1/deployment/installer/agent/unix/default/latest?Api-Token=xxxxxxxxxxxxxxxxxxxxx&arch=x86&flavor=default"
+/bin/sh Dynatrace-OneAgent.sh --set-app-log-content-access=true --set-infra-only=false --set-host-group=Production
 su -c 'nohup /home/ubuntu/easytravel-2.0.0-x64/runEasyTravelNoGUI.sh --startgroup UEM --startscenario "Standard with REST Service and Angular2 frontend" &' - ubuntu
+echo "sudo halt" | at now + 8 hours

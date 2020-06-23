@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2d2149d7-cbbd-4d15-9dd6-b9430383d63d",
+		"_postman_id": "43f4b13e-209c-49ce-a9b5-00efb61ed761",
 		"name": "TechLab-Managed-Cluster-Automation",
 		"description": "This collection is part of the dynatrace partner TechLab-Managed-Cluster-Automation training. For the training guide and more information please see https://github.com/dynatrace-partners/TechLab-Managed-Cluster-Automation\nThe goals of this tutorial are;\n1. **Tenant Management** - Automatically create tenants on a managed cluster. Useful for onboarding new customers, training events, creating additional environments etc.\n2. **User Group Management** - Automtically create User Groups with the correct access to your freshly created tenant. Useful for onboarding new users, training events and user management.\n3. **User Management** - Automtically create Users and assign them to the correct user group. Useful for onboarding new users, training events and user management.\n4. **API token Management** - Automatically create API tokens with the correct roles. Useful for automated Oneagent deployments, integrations, training events, key rotation etc.\n5. **Automated OneAgent Deployment** - Start ec2 instances and automatically install and configure the OneAgent. Useful for fast deployments of the OneAgent and ensuring new resources are implemented. ",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -12,8 +12,19 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "21d91a58-53de-448e-8003-1e9b24e13516",
+						"id": "03852a9d-c10b-4b60-b268-7ca845fc386a",
 						"exec": [
+							"//First delete any dynamic environment variables if they have been previously set by executing the commands except envNumber.",
+							"pm.environment.unset(\"envID\");",
+							"pm.environment.unset(\"envTokenManagementToken\");",
+							"pm.environment.unset(\"paasToken\");",
+							"pm.environment.unset(\"ImageId\");",
+							"pm.environment.unset(\"userData\");",
+							"pm.environment.unset(\"curHostgroup\");",
+							"pm.environment.unset(\"hostGroups\");",
+							"//Check if the envNumber environment variable has been set. We use this to workout if the request has been sent before or not. ",
+							"//If envNumber is not set then it is set to 1, if it is set it is incremented by 1.",
+							"//The envNumber is used to ensure the IDs are unique",
 							"var envNumber = pm.environment.get(\"envNumber\");",
 							"    if (!envNumber) {",
 							"        envNumber = 1;",
@@ -28,8 +39,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6234ca0b-fb80-4395-a4f5-6edc8d7771fc",
+						"id": "22554302-6e48-480e-b139-5de6435faa31",
 						"exec": [
+							"//Parse the JSON response body and extract the envID and token",
 							"var jsonData = JSON.parse(responseBody);",
 							"pm.environment.set(\"envID\", jsonData.id);",
 							"pm.environment.set(\"envTokenManagementToken\", jsonData.tokenManagementToken);"
@@ -54,7 +66,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"name\": \"TechLab-Managed-Cluster-Automation-{{envNumber}}\",\n  \"state\": \"ENABLED\",\n  \"tags\": [\n    \"customerA\",\n    \"production\"\n  ],\n  \"trial\": false\n}"
+					"raw": "{\n  \"name\": \"TechLab-Managed-Cluster-Automation-{{envNumber}}\",\n  \"state\": \"ENABLED\",\n  \"tags\": [\n    \"customerA\",\n    \"production\"\n  ]\n}"
 				},
 				"url": {
 					"raw": "https://{{dtManaged}}/api/cluster/v2/environments?createToken=true",
@@ -85,7 +97,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "3976b343-0c85-46b9-82f4-cdfc3d936c84",
+						"id": "1ac82630-a040-4c93-99b2-95c4bb5368ef",
 						"exec": [
 							""
 						],
@@ -95,7 +107,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "48984ff1-8f90-4f9a-bd74-a914efcc9e18",
+						"id": "0642f008-1106-4428-a714-4fc71673f243",
 						"exec": [
 							""
 						],
@@ -119,7 +131,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"\",\n    \"name\": \"TechLab-Managed-Cluster-Automation-{{envNumber}}\",\n    \"ldapGroupNames\": [\n        \"\"\n    ],\n    \"accessRight\": {\n        \"VIEWER\": [\n            \"{{envID}}\"\n        ],\n        \"MANAGE_SETTINGS\": [\n            \"{{envID}}\"\n        ],\n        \"AGENT_INSTALL\": [\n            \"{{envID}}\"\n        ],\n        \"LOG_VIEWER\": [\n            \"{{envID}}\"\n        ],\n        \"VIEW_SENSITIVE_REQUEST_DATA\": [\n            \"{{envID}}\"\n        ],\n        \"CONFIGURE_REQUEST_CAPTURE_DATA\": [\n            \"{{envID}}\"\n        ]\n    },\n    \"isClusterAdminGroup\": false\n}"
+					"raw": "{\n    \"id\": \"\",\n    \"name\": \"TechLab-Managed-Cluster-Automation-{{envNumber}}\",\n    \"ldapGroupNames\": [\n        \"\"\n    ],\n    \"accessRight\": {\n        \"VIEWER\": [\n            \"{{envID}}\"\n        ],\n        \"MANAGE_SETTINGS\": [\n            \"{{envID}}\"\n        ],\n        \"AGENT_INSTALL\": [\n            \"{{envID}}\"\n        ],\n        \"LOG_VIEWER\": [\n            \"{{envID}}\"\n        ],\n        \"VIEW_SENSITIVE_REQUEST_DATA\": [\n            \"{{envID}}\"\n        ],\n        \"CONFIGURE_REQUEST_CAPTURE_DATA\": [\n            \"{{envID}}\"\n        ],\n        \"REPLAY_SESSION_DATA\": [\n            \"{{envID}}\"\n        ]\n    },\n    \"isClusterAdminGroup\": false\n}"
 				},
 				"url": {
 					"raw": "https://{{dtManaged}}/api/v1.0/onpremise/groups",
@@ -134,7 +146,7 @@
 						"groups"
 					]
 				},
-				"description": "This will create a new environment on your managed cluster"
+				"description": "This will create a new user group  on your managed cluster"
 			},
 			"response": []
 		},
@@ -144,7 +156,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "c47d66c2-7d2f-4adf-809f-0ef1c248a4a3",
+						"id": "df780bd7-c99e-48b4-936e-21f04649190c",
 						"exec": [
 							""
 						],
@@ -154,7 +166,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cb5becde-c13e-44f7-9929-d7fcdddcf913",
+						"id": "5e8334b4-47bf-4126-93a9-126641d72dbb",
 						"exec": [
 							""
 						],
@@ -193,7 +205,7 @@
 						"users"
 					]
 				},
-				"description": "This will create a new environment on your managed cluster"
+				"description": "This will create a new user on your managed cluster"
 			},
 			"response": []
 		},
@@ -203,7 +215,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "2a985339-9147-4388-ae4f-d74a5cb257a5",
+						"id": "6eee3e29-025f-47f9-9a9f-f1e8313f1560",
 						"exec": [
 							""
 						],
@@ -213,8 +225,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "712e3b2b-4631-4287-bb8a-4f56b05ef6e7",
+						"id": "efd54ea9-f098-4427-9446-913654493fd7",
 						"exec": [
+							"//Parse the JSON response body and extract the environment token",
 							"var jsonData = JSON.parse(responseBody);",
 							"pm.environment.set(\"paasToken\", jsonData.token);"
 						],
@@ -238,7 +251,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"name\": \"TechLab-Managed-Cluster-Automation\",\n  \"scopes\": [\n    \"InstallerDownload\"\n  ],\n  \"expiresIn\": {\n    \"value\": 1,\n    \"unit\": \"HOURS\"\n  }\n}"
+					"raw": "{\n  \"name\": \"TechLab-Managed-Cluster-Automation\",\n  \"scopes\": [\n    \"InstallerDownload\"\n  ],\n  \"expiresIn\": {\n    \"value\": 4,\n    \"unit\": \"HOURS\"\n  }\n}"
 				},
 				"url": {
 					"raw": "https://{{dtManaged}}/e/{{envID}}/api/v1/tokens",
@@ -254,7 +267,7 @@
 						"tokens"
 					]
 				},
-				"description": "This will create a new environment on your managed cluster"
+				"description": "This will create a new environment token with installer download permissions"
 			},
 			"response": []
 		},
@@ -264,8 +277,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "56143914-102a-41d4-b5ed-11e6180a183c",
+						"id": "1b38044c-651a-436f-aa18-0e193b2a16e7",
 						"exec": [
+							"//Parse the JSON response body and extract ImageId for the latest image",
 							"var jsonObject = xml2Json(pm.response.text());",
 							"var a = jsonObject.DescribeImagesResponse.imagesSet.item;",
 							"a.sort(function(a,b){",
@@ -279,7 +293,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "b6f76969-0ac3-4687-873c-500d2e742ced",
+						"id": "09073e2a-f2f1-46bd-bd38-ff0c9a372073",
 						"exec": [
 							""
 						],
@@ -364,17 +378,12 @@
 							"value": "2016-11-15"
 						},
 						{
-							"key": "ImageId.1",
-							"value": "ami-0701e7be9b2a77600",
-							"disabled": true
-						},
-						{
 							"key": "Owner",
 							"value": "099720109477"
 						}
 					]
 				},
-				"description": "Get the AMI ID for the latest easyTravel image image"
+				"description": "Get the AMI ID for the latest Ubuntu Image"
 			},
 			"response": []
 		},
@@ -384,44 +393,58 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "bd219cbf-fc45-4f8c-a7cd-1f4bcc8fa532",
+						"id": "2042369d-24c9-4907-bb2e-40d8625b2b7f",
 						"exec": [
+							"//Check if the hostGroups environment variable has been set. We use this to workout if the request has been sent before or not. ",
 							"var hostGroups = pm.environment.get(\"hostGroups\");",
-							"",
+							"//If it hasn't been set we know this is the first execution so we set an array for the hostGroups variable",
 							"if (!hostGroups) {",
 							"    hostGroups = [\"Production\", \"Test\", \"Finish\"];",
 							"}",
+							"//We then select the next item in our array and set it as variable curHostgroup.",
 							"var curHostgroup = hostGroups.shift();",
+							"//The Finish item is there as a safety setp to stop more than 2 requests being sent. If you execute it a 3rd time the value is Finish. If it is then an error is thrown and the request is not sent.",
 							"if (curHostgroup == \"Finish\") {",
 							"    throw new Error('All requests now sent')",
-							"} ",
+							"}",
+							"//set the hostGroups variable as teh environment variable hostGroups ",
 							"pm.environment.set(\"hostGroups\", hostGroups)",
+							"//Set the curHostgroup variable as curHostgroup environment variable so it can be used in the request.",
 							"pm.environment.set(\"curHostgroup\", curHostgroup)",
-							"",
+							"//Configure the userdata Some is pre configured and already base 64 encode, the dynamic cotent is gatherer and encoded by the script.",
+							"//Get the required environment variables",
 							"var dtManaged = pm.environment.get('dtManaged')",
 							"var envID = pm.environment.get('envID')",
 							"var paasToken = pm.environment.get('paasToken')",
-							"var insallET = \"IyEvYmluL2Jhc2gKbWtkaXIgL2hvbWUvdWJ1bnR1L2Vhc3lUcmF2ZWwKd2dldCAtUCAvaG9tZS91YnVudHUvZWFzeVRyYXZlbCBodHRwOi8vZGV4eWE2ZDlnczVzLmNsb3VkZnJvbnQubmV0L2xhdGVzdC9keW5hdHJhY2UtZWFzeXRyYXZlbC1saW51eC14ODZfNjQuamFyCm1rZGlyIGVhc3l0cmF2ZWwtMi4wLjAteDY0CmNob3duIHVidW50dTp1YnVudHUgZWFzeXRyYXZlbC0yLjAuMC14NjQKY2hvd24gdWJ1bnR1OnVidW50dSBkeW5hdHJhY2UtZWFzeXRyYXZlbC1saW51eC14ODZfNjQuamFyCmFwdC1nZXQgdXBkYXRlCmFwdCAteSBpbnN0YWxsIGRlZmF1bHQtanJlCnN1IC1jICdqYXZhIC1qYXIgL2hvbWUvdWJ1bnR1L2Vhc3lUcmF2ZWwvZHluYXRyYWNlLWVhc3l0cmF2ZWwtbGludXgteDg2XzY0LmphciAteScgLSB1YnVudHUKYXB0LWdldCAteSBpbnN0YWxsIGxpYmd0ay0zLTAgbGlieHNzMSBsaWJhc291bmQyCnN1IC1jICdta2RpciAtcCAvaG9tZS91YnVudHUvLmR5bmFUcmFjZS9lYXN5VHJhdmVsXCAyLjAuMC9lYXN5VHJhdmVsL2NvbmZpZycgLSB1YnVudHUKZWNobyAnY29uZmlnLmFwYWNoZUZyb250ZW5kUHVibGljVXJsPWh0dHA6Ly9lYzItNTQtMjI5LTIwOS0xNDguZXUtd2VzdC0xLmNvbXB1dGUuYW1hem9uYXdzLmNvbTo4MDc5LycgPiAvaG9tZS91YnVudHUvLmR5bmFUcmFjZS9lYXN5VHJhdmVsXCAyLjAuMC9lYXN5VHJhdmVsL2NvbmZpZy9lYXN5VHJhdmVsTG9jYWwucHJvcGVydGllcwpleHBvcnQgdGVtcD0iY29uZmlnLmFuZ3VsYXJGcm9udGVuZFB1YmxpY1VybD1odHRwOi8vZWMyLTM0LTI0NC0xODctMTQ0LmV1LXdlc3QtMS5jb21wdXRlLmFtYXpvbmF3cy5jb206OTA4MC8iCnNlZCAgLWkgIjEgaVxcJHRlbXAiIC9ob21lL3VidW50dS8uZHluYVRyYWNlL2Vhc3lUcmF2ZWxcIDIuMC4wL2Vhc3lUcmF2ZWwvY29uZmlnL2Vhc3lUcmF2ZWxMb2NhbC5wcm9wZXJ0aWVzCmNob3duIHVidW50dTp1YnVudHUgL2hvbWUvdWJ1bnR1Ly5keW5hVHJhY2UvZWFzeVRyYXZlbFwgMi4wLjAvZWFzeVRyYXZlbC9jb25maWcvZWFzeVRyYXZlbExvY2FsLnByb3BlcnRpZXMKZXhwb3J0IHRlbXA9InNlZCAtaS5iYWsgJ3MvXlxcXChjb25maWcuYW5ndWxhckZyb250ZW5kUHVibGljVXJsPWh0dHA6XFxcL1xcXC9cXFwpW146XSpcL1xcXDEnXCRyZXNwb25zZScvJyAvaG9tZS91YnVudHUvLmR5bmFUcmFjZS9lYXN5VHJhdmVsXFxcIDIuMC4wL2Vhc3lUcmF2ZWwvY29uZmlnL2Vhc3lUcmF2ZWxMb2NhbC5wcm9wZXJ0aWVzIgpzZWQgIC1pICIyIGlcXCR0ZW1wIiAvaG9tZS91YnVudHUvZWFzeXRyYXZlbC0yLjAuMC14NjQvcnVuRWFzeVRyYXZlbE5vR1VJLnNoCmV4cG9ydCB0ZW1wPSJzZWQgLWkuYmFrICdzL15cXFwoY29uZmlnLmFwYWNoZUZyb250ZW5kUHVibGljVXJsPWh0dHA6XFxcL1xcXC9cXFwpW146XSpcL1xcXDEnXCRyZXNwb25zZScvJyAvaG9tZS91YnVudHUvLmR5bmFUcmFjZS9lYXN5VHJhdmVsXFxcIDIuMC4wL2Vhc3lUcmF2ZWwvY29uZmlnL2Vhc3lUcmF2ZWxMb2NhbC5wcm9wZXJ0aWVzIgpzZWQgIC1pICIyIGlcXCR0ZW1wIiAvaG9tZS91YnVudHUvZWFzeXRyYXZlbC0yLjAuMC14NjQvcnVuRWFzeVRyYXZlbE5vR1VJLnNoCnNlZCAtaSAiMXMvLiovJlxuZWNobyBcJHJlc3BvbnNlLyIgL2hvbWUvdWJ1bnR1L2Vhc3l0cmF2ZWwtMi4wLjAteDY0L3J1bkVhc3lUcmF2ZWxOb0dVSS5zaApzZWQgLWkgIjFzLy4qLyZcbnJlc3BvbnNlPVxgXCRwdWJsaWNETlNcYC8iIC9ob21lL3VidW50dS9lYXN5dHJhdmVsLTIuMC4wLXg2NC9ydW5FYXN5VHJhdmVsTm9HVUkuc2gKc2VkIC1pICIxcy8uKi8mXG5lY2hvIFwkcHVibGljRE5TLyIgL2hvbWUvdWJ1bnR1L2Vhc3l0cmF2ZWwtMi4wLjAteDY0L3J1bkVhc3lUcmF2ZWxOb0dVSS5zaApzZWQgLWkgIjFzLy4qLyZcbnB1YmxpY0ROUz1cImN1cmwgaHR0cDpcL1wvMTY5LjI1NC4xNjkuMjU0XC9sYXRlc3RcL21ldGEtZGF0YVwvcHVibGljLWhvc3RuYW1lXCIvIiAvaG9tZS91YnVudHUvZWFzeXRyYXZlbC0yLjAuMC14NjQvcnVuRWFzeVRyYXZlbE5vR1VJLnNoCnNlZCAtaSAiMXMvLiovJlxuZWNobyBcImRldGVybWluaW5nIHB1YmxpYyBkbnNcIi8iIC9ob21lL3VidW50dS9lYXN5dHJhdmVsLTIuMC4wLXg2NC9ydW5FYXN5VHJhdmVsTm9HVUkuc2gKc2VkIC1pICIxcy8uKi8mXG4vIiAvaG9tZS91YnVudHUvZWFzeXRyYXZlbC0yLjAuMC14NjQvcnVuRWFzeVRyYXZlbE5vR1VJLnNo\"",
-							"var downloadOneAgent = `",
-							"wget  -O Dynatrace-OneAgent.sh \\\"https://` + dtManaged + `/e/`+ envID + `/api/v1/deployment/installer/agent/unix/default/latest?Api-Token=` + paasToken + `&arch=x86&flavor=default\\\"`",
-							"var installOneAgent = `",
-							"/bin/sh Dynatrace-OneAgent.sh APP_LOG_CONTENT_ACCESS=1 INFRA_ONLY=0 HOST_GROUP=` + curHostgroup",
-							"console.log('downloadOA:', downloadOneAgent);",
-							"console.log('installOA:', installOneAgent);",
-							"",
-							"//var rawStr = pm.environment.get('rawUserData')",
-							"//var wordArray = CryptoJS.enc.Utf8.parse(rawStr);",
+							"//This is base64 encoded commands to install and configure easyTravel",
+							"var insallET = \"IyEvYmluL2Jhc2gKbWtkaXIgL2hvbWUvdWJ1bnR1L2Vhc3lUcmF2ZWwKd2dldCAtUCAvaG9tZS91YnVudHUvZWFzeVRyYXZlbCBodHRwOi8vZGV4eWE2ZDlnczVzLmNsb3VkZnJvbnQubmV0L2xhdGVzdC9keW5hdHJhY2UtZWFzeXRyYXZlbC1saW51eC14ODZfNjQuamFyCm1rZGlyIGVhc3l0cmF2ZWwtMi4wLjAteDY0CmNob3duIHVidW50dTp1YnVudHUgZWFzeXRyYXZlbC0yLjAuMC14NjQKY2hvd24gdWJ1bnR1OnVidW50dSBkeW5hdHJhY2UtZWFzeXRyYXZlbC1saW51eC14ODZfNjQuamFyCmFwdC1nZXQgdXBkYXRlCmFwdCAteSBpbnN0YWxsIGRlZmF1bHQtanJlCnN1IC1jICdqYXZhIC1qYXIgL2hvbWUvdWJ1bnR1L2Vhc3lUcmF2ZWwvZHluYXRyYWNlLWVhc3l0cmF2ZWwtbGludXgteDg2XzY0LmphciAteScgLSB1YnVudHUKYXB0LWdldCAteSBpbnN0YWxsIGxpYmd0ay0zLTAgbGlieHNzMSBsaWJhc291bmQyCnN1IC1jICdta2RpciAtcCAvaG9tZS91YnVudHUvLmR5bmFUcmFjZS9lYXN5VHJhdmVsXCAyLjAuMC9lYXN5VHJhdmVsL2NvbmZpZycgLSB1YnVudHUKZWNobyAnY29uZmlnLmFwYWNoZUZyb250ZW5kUHVibGljVXJsPWh0dHA6Ly9lYzItNTQtMjI5LTIwOS0xNDguZXUtd2VzdC0xLmNvbXB1dGUuYW1hem9uYXdzLmNvbTo4MDc5LycgPiAvaG9tZS91YnVudHUvLmR5bmFUcmFjZS9lYXN5VHJhdmVsXCAyLjAuMC9lYXN5VHJhdmVsL2NvbmZpZy9lYXN5VHJhdmVsTG9jYWwucHJvcGVydGllcwpleHBvcnQgdGVtcD0iY29uZmlnLmFuZ3VsYXJGcm9udGVuZFB1YmxpY1VybD1odHRwOi8vZWMyLTM0LTI0NC0xODctMTQ0LmV1LXdlc3QtMS5jb21wdXRlLmFtYXpvbmF3cy5jb206OTA4MC8iCnNlZCAgLWkgIjEgaVxcJHRlbXAiIC9ob21lL3VidW50dS8uZHluYVRyYWNlL2Vhc3lUcmF2ZWxcIDIuMC4wL2Vhc3lUcmF2ZWwvY29uZmlnL2Vhc3lUcmF2ZWxMb2NhbC5wcm9wZXJ0aWVzCmNob3duIHVidW50dTp1YnVudHUgL2hvbWUvdWJ1bnR1Ly5keW5hVHJhY2UvZWFzeVRyYXZlbFwgMi4wLjAvZWFzeVRyYXZlbC9jb25maWcvZWFzeVRyYXZlbExvY2FsLnByb3BlcnRpZXMKZXhwb3J0IHRlbXA9InNlZCAtaS5iYWsgJ3MvXlxcXChjb25maWcuYW5ndWxhckZyb250ZW5kUHVibGljVXJsPWh0dHA6XFxcL1xcXC9cXFwpW146XSpcL1xcXDEnXCRyZXNwb25zZScvJyAvaG9tZS91YnVudHUvLmR5bmFUcmFjZS9lYXN5VHJhdmVsXFxcIDIuMC4wL2Vhc3lUcmF2ZWwvY29uZmlnL2Vhc3lUcmF2ZWxMb2NhbC5wcm9wZXJ0aWVzIgpzZWQgIC1pICIyIGlcXCR0ZW1wIiAvaG9tZS91YnVudHUvZWFzeXRyYXZlbC0yLjAuMC14NjQvcnVuRWFzeVRyYXZlbE5vR1VJLnNoCmV4cG9ydCB0ZW1wPSJzZWQgLWkuYmFrICdzL15cXFwoY29uZmlnLmFwYWNoZUZyb250ZW5kUHVibGljVXJsPWh0dHA6XFxcL1xcXC9cXFwpW146XSpcL1xcXDEnXCRyZXNwb25zZScvJyAvaG9tZS91YnVudHUvLmR5bmFUcmFjZS9lYXN5VHJhdmVsXFxcIDIuMC4wL2Vhc3lUcmF2ZWwvY29uZmlnL2Vhc3lUcmF2ZWxMb2NhbC5wcm9wZXJ0aWVzIgpzZWQgIC1pICIyIGlcXCR0ZW1wIiAvaG9tZS91YnVudHUvZWFzeXRyYXZlbC0yLjAuMC14NjQvcnVuRWFzeVRyYXZlbE5vR1VJLnNoCnNlZCAtaSAiMXMvLiovJlxuZWNobyBcJHJlc3BvbnNlLyIgL2hvbWUvdWJ1bnR1L2Vhc3l0cmF2ZWwtMi4wLjAteDY0L3J1bkVhc3lUcmF2ZWxOb0dVSS5zaApzZWQgLWkgIjFzLy4qLyZcbnJlc3BvbnNlPVxgXCRwdWJsaWNETlNcYC8iIC9ob21lL3VidW50dS9lYXN5dHJhdmVsLTIuMC4wLXg2NC9ydW5FYXN5VHJhdmVsTm9HVUkuc2gKc2VkIC1pICIxcy8uKi8mXG5lY2hvIFwkcHVibGljRE5TLyIgL2hvbWUvdWJ1bnR1L2Vhc3l0cmF2ZWwtMi4wLjAteDY0L3J1bkVhc3lUcmF2ZWxOb0dVSS5zaApzZWQgLWkgIjFzLy4qLyZcbnB1YmxpY0ROUz1cImN1cmwgaHR0cDpcL1wvMTY5LjI1NC4xNjkuMjU0XC9sYXRlc3RcL21ldGEtZGF0YVwvcHVibGljLWhvc3RuYW1lXCIvIiAvaG9tZS91YnVudHUvZWFzeXRyYXZlbC0yLjAuMC14NjQvcnVuRWFzeVRyYXZlbE5vR1VJLnNoCnNlZCAtaSAiMXMvLiovJlxuZWNobyBcImRldGVybWluaW5nIHB1YmxpYyBkbnNcIi8iIC9ob21lL3VidW50dS9lYXN5dHJhdmVsLTIuMC4wLXg2NC9ydW5FYXN5VHJhdmVsTm9HVUkuc2gKc2VkIC1pICIxcy8uKi8mXG4vIiAvaG9tZS91YnVudHUvZWFzeXRyYXZlbC0yLjAuMC14NjQvcnVuRWFzeVRyYXZlbE5vR1VJLnNoCnNlZCAtaSAicy9jb25maWcuYmFzZUxvYWRIZWFkbGVzc0FuZ3VsYXJSYXRpbz0wLjAvY29uZmlnLmJhc2VMb2FkSGVhZGxlc3NBbmd1bGFyUmF0aW89MC4yNS8iIC9ob21lL3VidW50dS9lYXN5dHJhdmVsLTIuMC4wLXg2NC9yZXNvdXJjZXMvZWFzeVRyYXZlbENvbmZpZy5wcm9wZXJ0aWVzCnNlZCAtaSAicy9jb25maWcuYmFzZUxvYWRIZWFkbGVzc01vYmlsZUFuZ3VsYXJSYXRpbz0wLjAvY29uZmlnLmJhc2VMb2FkSGVhZGxlc3NNb2JpbGVBbmd1bGFyUmF0aW89MC4xLyIgL2hvbWUvdWJ1bnR1L2Vhc3l0cmF2ZWwtMi4wLjAteDY0L3Jlc291cmNlcy9lYXN5VHJhdmVsQ29uZmlnLnByb3BlcnRpZXMK\"",
+							"//Configure the OneAgent download URL",
+							"var downloadOneAgent = `wget  -O Dynatrace-OneAgent.sh \\\"https://` + dtManaged + `/e/`+ envID + `/api/v1/deployment/installer/agent/unix/default/latest?Api-Token=` + paasToken + `&arch=x86&flavor=default\\\"",
+							"`",
+							"//Configure the OneAgent installer command by setting correct hostgroup",
+							"var installOneAgent = `/bin/sh Dynatrace-OneAgent.sh --set-app-log-content-access=true --set-infra-only=false --set-host-group=` + curHostgroup",
+							"//Base 64 encode the download and install commands for the OneAgent and strip any padding",
 							"var wordArraydownloadOneAgent = CryptoJS.enc.Utf8.parse(downloadOneAgent);",
 							"var wordArrayinstallOneAgent = CryptoJS.enc.Utf8.parse(installOneAgent);",
-							"//var base64 = CryptoJS.enc.Base64.stringify(wordArray);",
 							"var base64downloadOneAgent = CryptoJS.enc.Base64.stringify(wordArraydownloadOneAgent);",
+							"base64downloadOneAgent = base64RemovePadding(base64downloadOneAgent);",
 							"var base64installOneAgent = CryptoJS.enc.Base64.stringify(wordArrayinstallOneAgent);",
-							"console.log('base64downloadOneAgent:', base64downloadOneAgent);",
-							"console.log('base64installOneAgent:', base64installOneAgent);",
+							"base64installOneAgent = base64RemovePadding(base64installOneAgent);",
+							"//This is a base64 encoded commands to start easytravel with startgroup UEM and startscenario \"Standard with REST Service and Angular2 frontend\"",
 							"var startET = \"CnN1IC1jICdub2h1cCAvaG9tZS91YnVudHUvZWFzeXRyYXZlbC0yLjAuMC14NjQvcnVuRWFzeVRyYXZlbE5vR1VJLnNoIC0tc3RhcnRncm91cCBVRU0gLS1zdGFydHNjZW5hcmlvICJTdGFuZGFyZCB3aXRoIFJFU1QgU2VydmljZSBhbmQgQW5ndWxhcjIgZnJvbnRlbmQiICYnIC0gdWJ1bnR1\"",
-							"var userData = insallET + base64downloadOneAgent + base64installOneAgent + startET",
-							"console.log('userData', userData)",
-							"pm.environment.set(\"userData\", userData);"
+							"//Comment ot the following line if you fo not wish your instance to be automatically terminated after 8 hours",
+							"var autoTerminate = \"CmVjaG8gInN1ZG8gaGFsdCIgfCBhdCBub3cgKyA4IGhvdXJz\"",
+							"if (!autoTerminate) {",
+							"    var autoTerminate = \"\";",
+							"    var userData = insallET + base64downloadOneAgent + base64installOneAgent + startET",
+							"} else {",
+							"    var userData = insallET + base64downloadOneAgent + base64installOneAgent + startET + autoTerminate",
+							"}",
+							"pm.environment.set(\"userData\", userData);",
+							"//Function to remove base64 padding",
+							"function base64RemovePadding(str) {",
+							"    return str.replace(/={1,2}$/, '');",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -429,8 +452,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b060e9ee-bc10-494c-a8b0-100ff93ce770",
+						"id": "d5347289-690c-45e6-83df-3170dbaecd72",
 						"exec": [
+							"//Error handling for different host groups. If production then point next request back to itself. If anything else no next request is set.",
 							"var curHostgroup = pm.environment.get(\"curHostgroup\");",
 							"if (curHostgroup == \"Production\") {",
 							"    postman.setNextRequest(\"Launch AWS easyTravel Instances\");",
@@ -475,7 +499,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "https://ec2.{{region}}.amazonaws.com/?Action=RunInstances&ImageId={{ImageId}}&MinCount=1&MaxCount=1&InstanceType=t2.medium&UserData={{userData}}&TagSpecification.1.ResourceType=instance&TagSpecification.1.Tag.1.Key=DT Training&TagSpecification.1.Tag.1.Value=true&TagSpecification.1.Tag.2.Key=Name&TagSpecification.1.Tag.2.Value=TechLab-Managed-Cluster-Automation-{{envNumber}}-{{curHostgroup}}&TagSpecification.2.ResourceType=volume&TagSpecification.2.Tag.1.Key=DT Training&TagSpecification.2.Tag.1.Value=true&TagSpecification.2.Tag.2.Key=Name&TagSpecification.2.Tag.2.Value=TechLab-Managed-Cluster-Automation-{{envNumber}}-{{curHostgroup}}&InstanceInitiatedShutdownBehavior=terminate&KeyName=DTTrainingAttendee&Version=2016-11-15&SecurityGroupId=sg-1b9d1060",
+					"raw": "https://ec2.{{region}}.amazonaws.com/?Action=RunInstances&ImageId={{ImageId}}&MinCount=1&MaxCount=1&InstanceType=t2.medium&UserData={{userData}}&TagSpecification.1.ResourceType=instance&TagSpecification.1.Tag.1.Key=DT Training&TagSpecification.1.Tag.1.Value=true&TagSpecification.1.Tag.2.Key=Name&TagSpecification.1.Tag.2.Value=TechLab-Managed-Cluster-Automation-{{envNumber}}-{{curHostgroup}}&TagSpecification.2.ResourceType=volume&TagSpecification.2.Tag.1.Key=DT Training&TagSpecification.2.Tag.1.Value=true&TagSpecification.2.Tag.2.Key=Name&TagSpecification.2.Tag.2.Value=TechLab-Managed-Cluster-Automation-{{envNumber}}-{{curHostgroup}}&InstanceInitiatedShutdownBehavior=terminate&Version=2016-11-15",
 					"protocol": "https",
 					"host": [
 						"ec2",
@@ -556,20 +580,244 @@
 							"value": "terminate"
 						},
 						{
-							"key": "KeyName",
-							"value": "DTTrainingAttendee"
-						},
-						{
 							"key": "Version",
 							"value": "2016-11-15"
 						},
 						{
+							"key": "KeyName",
+							"value": "",
+							"disabled": true
+						},
+						{
 							"key": "SecurityGroupId",
-							"value": "sg-1b9d1060"
+							"value": "",
+							"disabled": true
 						}
 					]
 				},
 				"description": "This will launch an ec2 instance with easyTravel  and the OneAgent installed and connected to your new tenant"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User (Optional)",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Api-Token {{dtAPI}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{dtManaged}}/api/v1.0/onpremise/users/user{{envNumber}}",
+					"protocol": "https",
+					"host": [
+						"{{dtManaged}}"
+					],
+					"path": [
+						"api",
+						"v1.0",
+						"onpremise",
+						"users",
+						"user{{envNumber}}"
+					]
+				},
+				"description": "This request will delete the created dynatrace user"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Group",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "962fb961-8c5f-4279-8e77-68799d852c1d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e4243582-a4a9-4201-8813-1dceccced066",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{dtAPI}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{dtManaged}}/api/v1.0/onpremise/groups/TechLab-Managed-Cluster-Automation-{{envNumber}}",
+					"protocol": "https",
+					"host": [
+						"{{dtManaged}}"
+					],
+					"path": [
+						"api",
+						"v1.0",
+						"onpremise",
+						"groups",
+						"TechLab-Managed-Cluster-Automation-{{envNumber}}"
+					]
+				},
+				"description": "This will create a new environment on your managed cluster"
+			},
+			"response": []
+		},
+		{
+			"name": "Disable Environment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fdcacf8e-5079-4aac-9cde-c3552d7281b9",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "27ce7313-9017-403d-a5ae-03ce58b0251d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{dtAPI}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"TechLab-Managed-Cluster-Automation-{{envNumber}}\",\n  \"state\": \"DISABLED\",\n  \"tags\": [\n    \"customerA\",\n    \"production\"\n  ],\n  \"trial\": false\n}"
+				},
+				"url": {
+					"raw": "https://{{dtManaged}}/api/cluster/v2/environments/{{envID}}",
+					"protocol": "https",
+					"host": [
+						"{{dtManaged}}"
+					],
+					"path": [
+						"api",
+						"cluster",
+						"v2",
+						"environments",
+						"{{envID}}"
+					]
+				},
+				"description": "This will create a new environment on your managed cluster"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Environment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3bca9267-2f99-48f6-8611-705afe0a7d6a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "41a42e87-417d-412b-a8a0-86577d8f902d",
+						"exec": [
+							"//following the execution reset postman by deleting the created environment variables so you can run the requests again in the future.",
+							"pm.environment.unset(\"envNumber\");",
+							"pm.environment.unset(\"envID\");",
+							"pm.environment.unset(\"envTokenManagementToken\");",
+							"pm.environment.unset(\"paasToken\");",
+							"pm.environment.unset(\"ImageId\");",
+							"pm.environment.unset(\"userData\");",
+							"pm.environment.unset(\"curHostgroup\");",
+							"pm.environment.unset(\"hostGroups\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{dtAPI}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"TechLab-Managed-Cluster-Automation-{{envNumber}}\",\n  \"state\": \"DISABLED\",\n  \"tags\": [\n    \"customerA\",\n    \"production\"\n  ],\n  \"trial\": false\n}"
+				},
+				"url": {
+					"raw": "https://{{dtManaged}}/api/cluster/v2/environments/{{envID}}",
+					"protocol": "https",
+					"host": [
+						"{{dtManaged}}"
+					],
+					"path": [
+						"api",
+						"cluster",
+						"v2",
+						"environments",
+						"{{envID}}"
+					]
+				},
+				"description": "This will create a new environment on your managed cluster"
 			},
 			"response": []
 		}

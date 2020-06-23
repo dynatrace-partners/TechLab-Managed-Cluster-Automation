@@ -96,9 +96,17 @@ For this tutorial we will leverage postman to make our API calls. If you would l
 
 Once you have installed Postman we need a couple of things
 1. Upload the [postman environment](./postman/TechLab-Managed-Cluster-Automation.postman_environment.json) we have provided.
-Inside Postman click on import, select file and upload TechLab-Managed-Cluster-Automation.postman_environment.json
+
+    Inside Postman click on import, select file and upload TechLab-Managed-Cluster-Automation.postman_environment.json
+
+    ![](./images/preparation/postmanEnv.png)
+
 2. Upload the [postman collection](./postman/TechLab-Managed-Cluster-Automation.postman_collection.json) we have provided.
-Repeat the same process to import TechLab-Managed-Cluster-Automation.postman_collection.json
+
+    Repeat the same process to import TechLab-Managed-Cluster-Automation.postman_collection.json
+
+    ![](./images/preparation/postmanCollection.png)
+
 3. Configure your postman environment variables
 
     * Click on the ![](./images/preparation/manageEnvironments.png) to manage your environments
@@ -110,6 +118,10 @@ Repeat the same process to import TechLab-Managed-Cluster-Automation.postman_col
     ![](./images/preparation/environmentVars.png)
 
     * Click on update to save your changes
+
+4. Select your postman environment in the upper right hand corner dropdown
+
+    ![](./images/preparation/postmanSelEnv.png)
 
 # 1. Creating a new monitoring environment
 
@@ -167,7 +179,7 @@ tags | customerA, production | Tags are not visible in CMC, but they are via the
 **Pre-request script**
 
 This is part of postman and not a requirement to create an environment via an API call. You can use pre-request scripts in Postman to execute JavaScript before a request runs. You can find more details [here](https://learning.postman.com/docs/postman/scripts/pre-request-scripts/)
-In our case the script checks to see if the environment variable envNumber exists or not. If it doesn't exist \(and it won't the first time you do this exercise\) it creates it and sets the value to 1. If the variable does exist \(i.e. you have run the request before\) then it will increment the value by one. As detailed above this variable is used in our environment name.
+In our case the script first deletes any dynamic environment variables that would have been set if this collection has been run before, except envNumber as this should remain if it has been used before to keep the IDs unique. Then it checks to see if envNumber exists or not. If it doesn't exist \(and it won't the first time you do this exercise\) it creates it and sets the value to 1. If the variable does exist \(i.e. you have run the request before\) then it will increment the value by one. As detailed above this variable is used in our environment name.
 
 **Tests**
 
@@ -470,7 +482,7 @@ The secret sauce here that you should be aware of is [AWS UserData](https://docs
 This is part of postman. You can use pre-request scripts in Postman to execute JavaScript before a request runs. You can find more details [here](https://learning.postman.com/docs/postman/scripts/pre-request-scripts/)
 In our case the script sets the correct host group when requests are executed and updates the userdata to be sent to aws.
 
-**ATTENTION:** When we create these hosts they are set to auto terminate after 8 hours. If you do not want them to auto terminate then please comment out line 38. The host is also set to auto terminate on shutdown so keep in mind even if you comment this line out the host would still terminate if you shut it down.
+**ATTENTION:** When we create these hosts they are set to auto terminate after 8 hours. If you do not want them to auto terminate then please comment out line 39. The host is also set to auto terminate on shutdown so keep in mind even if you comment this line out the host would still terminate if you shut it down.
 
 To change the shutdown behaviour of an instance using the console (only after you have started your instance)
 
