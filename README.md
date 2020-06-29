@@ -487,7 +487,7 @@ The secret sauce here that you should be aware of is [AWS UserData](https://docs
 This is part of postman. You can use pre-request scripts in Postman to execute JavaScript before a request runs. You can find more details [here](https://learning.postman.com/docs/postman/scripts/pre-request-scripts/)
 In our case the script sets the correct host group when requests are executed and updates the userdata to be sent to aws.
 
-**ATTENTION:** When we create these hosts they are set to auto terminate after 8 hours. If you do not want them to auto terminate then please comment out line 39. The host is also set to auto terminate on shutdown so keep in mind even if you comment this line out the host would still terminate if you shut it down.
+**ATTENTION:** When we create these hosts they are set to auto terminate after 8 hours. If you do not want them to auto terminate then please comment out lines 34 & 35. The host is also set to auto terminate on shutdown so keep in mind even if you comment this line out the host would still terminate if you shut it down.
 
 To change the shutdown behaviour of an instance using the console (only after you have started your instance)
 
@@ -724,4 +724,6 @@ To clean up postman so you can run through these exercises in the future all the
 
     If you get a 401 error check the value of your dtAPI environment variable. Ensure both the initial and current values are set and the same. If they are set verify the token is correct in CMC and it has the Service Provider API role. Be careful if your token ends with a = as this can get cut off when copying and pasting.
 
-Congratulations you have just deleted an environment via an API call. Now Let's disable our previously created environment.
+Congratulations you have just deleted an environment via an API call.
+
+We hope you have found this course useful.
