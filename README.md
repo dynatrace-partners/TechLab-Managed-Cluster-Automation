@@ -16,8 +16,8 @@ First we will run these steps individually so you get a feel for how they operat
 
 ## Pre-Requisites
 1. You need an AWS account. If you don't have one [get one here](https://aws.amazon.com/)
-1. AWS Access key and secret access key for an IAM user with rights ec2:RunInstances,  ec2:DescribeImages & ec2:CreateTags
-1. You need a Dynatrace Managed Cluster license. If you don't have one, reach out to your Dynatrace Partner Program Manager (PPM) to be granted a trial license.
+2. AWS Access key and secret access key for an IAM user with rights ec2:RunInstances,  ec2:DescribeImages & ec2:CreateTags. If you don't know how to do this don't worry it is explained in the next section.
+3. You need a Dynatrace Managed Cluster license. If you don't have one, reach out to your Dynatrace Partner Program Manager (PPM) to be granted a trial license.
 
 Region | Name | Email
 ------------ | ------------- | -------------
@@ -26,16 +26,16 @@ EMEA | Patricia Jesus Silva | [patricia.jesus.silva@dynatrace.com](mailto:patric
 LATAM | Luiz Rodrigues | [Luiz.Rodrigues@dynatrace.com](mailto:Luiz.Rodrigues@dynatrace.co)
 NORAM | Jamie Mallett | [Jamie.Mallett@dynatrace.com](mailto:Jamie.Mallett@dynatrace.com)
 
-1. You need a Managed Cluster. A single trial node is sufficient. This could be run on a VM or in your EC2 account [view specs](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-managed/installation/dynatrace-managed-hardware-and-system-requirements/)
-1. Optional: ActiveGates - An ActiveGate is not required to complete these exercises, but depending on your install and security requirements you may also require a Cluster and/or Environment ActiveGate. For more info see [When do I need to install an ActiveGate?](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/basic-concepts/when-do-i-need-to-install-an-activegate/)
-1. [Postman](https://www.postman.com/downloads/) installed
-1. You need to clone or copy the content of this GitHub repo to your local disk!
+4. You need a Managed Cluster. A single trial node is sufficient. This could be run on a VM or in your EC2 account [view specs](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-managed/installation/dynatrace-managed-hardware-and-system-requirements/)
+5. Optional: ActiveGates - An ActiveGate is not required to complete these exercises, but depending on your install and security requirements you may also require a Cluster and/or Environment ActiveGate. For more info see [When do I need to install an ActiveGate?](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/basic-concepts/when-do-i-need-to-install-an-activegate/)
+6. [Postman](https://www.postman.com/downloads/) installed
+7. You need to clone or copy the content of this GitHub repo to your local disk!
 
 ## Preparation
 
 **Amazon Web Services (AWS)**
 
-As we are going to use AWS EC2. We have tested this tutorial on eu-west-1 (Ireland) & ..... . To be on the safe side we suggest you pick one of these regions!
+As we are going to use AWS EC2. We have tested this tutorial on eu-west-1 (Ireland), Paris (eu-west-3) & ..... . To be on the safe side we suggest you pick one of these regions!
 
 Ensure you have created an IAM user  with rights ec2:RunInstances, ec2:DescribeImages & ec2:CreateTags I recommend you create a user for this with only these rights that can be removed in the future.
 
@@ -64,7 +64,7 @@ Login to your AWS account and navigate to IAM > Users > Add user and complete th
 
 ![](./images/preparation/awsPolicyGroup.png)
 
-7. Ensure your group has beed added for your user and the policy is attached. Click Next:tags. Tags are optional so add one if you wish and click Next:Review
+7. Ensure your group has been added for your user and the policy is attached. Click Next:tags. Tags are optional so add one if you wish and click Next:Review
 
 ![](./images/preparation/awsSetPer.png)
 
@@ -83,7 +83,11 @@ You will need to have provisioned your dynatrace managed cluster. For installati
 
 Once you have your cluster provisioned we need a couple of things
 1. Your dynatrace managed URL. It should look something like `https://xxxxxx.dynatrace-managed.com`
-2. Cluster API token. Inside CMC go to Settings -> API tokens -> Cluster tokens and select Generate token. Grant it the scope of Service Provider API
+2. Verify the node enpoint by clicking on the node on the home screen in CMC. Ensure the value in `IP address and port for OneAgent traffic` will be reachable by the OneAgent. Safeguard is to configure the cluster domain name.
+
+![](./images/preparation/nodeEndpoints.png)
+
+3. Cluster API token. Inside CMC go to Settings -> API tokens -> Cluster tokens and select Generate token. Grant it the scope of Service Provider API
 
 ![](./images/preparation/clusterapi.png)
 
@@ -96,7 +100,7 @@ Expand the token and copy the API key
 For this tutorial we will leverage postman to make our API calls. If you would like to take these concepts and incorporate them into your dynatrace provisioning process you can choose any tool you like providing it can make API calls. 
 
 Once you have installed Postman we need a couple of things
-1. Upload the [postman environment](./postman/TechLab-Managed-Cluster-Automation.postman_environment.json) we have provided.
+1. Upload the <a id="raw-url" href="https://raw.githubusercontent.com/dynatrace-partners/TechLab-Managed-Cluster-Automation/master/postman/TechLab-Managed-Cluster-Automation.postman_environment.json">postman environment</a> we have provided.
 
     Inside Postman click on import, select file and upload TechLab-Managed-Cluster-Automation.postman_environment.json
 
