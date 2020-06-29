@@ -106,7 +106,7 @@ Once you have installed Postman we need a couple of things
 
     ![](./images/preparation/postmanEnv.png)
 
-2. Upload the [postman collection](./postman/TechLab-Managed-Cluster-Automation.postman_collection.json) we have provided.
+2. Upload the [<a id="raw-url" href="https://raw.githubusercontent.com/dynatrace-partners/TechLab-Managed-Cluster-Automation/master/postman/TechLab-Managed-Cluster-Automation.postman_collection.json">postman collection</a> we have provided.
 
     Repeat the same process to import TechLab-Managed-Cluster-Automation.postman_collection.json
 
@@ -210,7 +210,7 @@ In our case the script parses the JSON response body for the ID and API token of
 
 5. Check your new environment now exists in CMC
 
-![](./images/monitoringenvironments/creteEnvCMC.png)
+![](./images/monitoringenvironments/createEnvCMC.png)
 
 6. Access your new environment by clicking on its name in CMC and then Go to environment
 7. Verify your new envNumber,  envID and envTokenManagementToken have been set as environment variables in postman
@@ -527,10 +527,10 @@ Congratulations you have just created 2 new ec2 instances and auto deployed the 
 
 **Troubleshooting**
 If after 10 mins your hosts have not appeared in dynatrace check the following.
-1. In the AWS EC2 console select one of your instances and click on Actions > Image settings > View/Change User Data.
+1. In the AWS EC2 console select one of your instances and click on Actions > Instance settings > View/Change User Data.
     * Verify the userdata has not been corrupted
     * Check the values for your managed environment URL add API token in the wget command
-2. Log on to your instance and view log /var/log/cloud-init-output.log to check for errors in downloading, installing or connection of your OneAgent.
+2. Log on to your instance and view log /var/log/cloud-init-output.log to check for errors in downloading, installing or connection of your OneAgent. You can do this by executing `Tail -f /var/log/cloud-init-output.log`. Please note to access the instance you will need to have specified KeyName when you created the instance. 
 
 # 7. Deleting a user
 
