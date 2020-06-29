@@ -118,7 +118,7 @@ Once you have installed Postman we need a couple of things
 
     * Click on the environment name TechLab-Managed-Cluster-Automation
 
-    * Set all the 5 environment variables to your values. Ensure to set both the initial and current values. For dtManaged it should look like 'xxxxxx.dynatrace-managed.com' do not include the 'https://'
+    * Set the first 5 environment variables to your values. Ensure to set both the initial and current values. For dtManaged it should look like 'xxxxxx.dynatrace-managed.com' do not include the 'https://'. Do not tough the 'installET' variable.
 
     ![](./images/preparation/environmentVars.png)
 
