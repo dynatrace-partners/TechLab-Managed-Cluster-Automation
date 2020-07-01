@@ -12,7 +12,7 @@ The goals of this tutorial are;
 4. **Environment API token Management** - Automatically create environment API tokens with the correct roles. Useful for automated OneAgent deployments, integrations, training events, key rotation etc.
 5. **Automated OneAgent Deployment** - Start ec2 instances and automatically install and configure the OneAgent. Useful for fast deployments of the OneAgent and ensuring new resources are implemented. 
 
-First we will run these steps individually so you get a feel for how they operate then we will provide a script that allows you to do it all at once.
+We will run these steps individually so you get a feel for how they operate. In a real life scenario you could run them all one after the other.
 
 ## Pre-Requisites
 1. You need an AWS account. If you don't have one [get one here](https://aws.amazon.com/)
@@ -515,7 +515,7 @@ This request is designed to start 2 instance of easyTravel, one with the host gr
 
     If you get a 401 error check the value of your accessKeyID, secretAccessKey and region environment variables. Ensure both the initial and current values are set and the same. If they are verify you have added the correct roles in IAM.
 
-7. Inside your AWS console check the instance have been created
+7. Inside your AWS console check the instances have been created
 
 ![](./images/runinstances/runInstancesEC2.png)
 
