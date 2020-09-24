@@ -1,5 +1,3 @@
-**ATTENTION:** This is currently a work in progress. Please check back when the course is complete
-
 ![](./images/partner_program.png)
 
 # Overview
